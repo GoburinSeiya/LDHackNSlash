@@ -40,5 +40,5 @@ public:
 													//with this meta declaration the name of our rows will be the name of our input actions which is convenient
 	TArray<FHeroInputActionConfig> NativeInputActions; //We create a array for our InputActions
 
-	UInputAction* FindNativeInputActionByTag(const FGameplayTag& InInputTag); //We create a function to bind our inputs properly
+	UInputAction* FindNativeInputActionByTag(const FGameplayTag& InInputTag) const; //We create a function to bind our inputs properly
 };

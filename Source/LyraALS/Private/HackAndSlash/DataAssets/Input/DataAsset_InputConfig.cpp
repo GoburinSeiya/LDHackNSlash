@@ -3,7 +3,7 @@
 
 #include "HackAndSlash/DataAssets/Input/DataAsset_InputConfig.h"
 
-UInputAction* UDataAsset_InputConfig::FindNativeInputActionByTag(const FGameplayTag& InInputTag)
+UInputAction* UDataAsset_InputConfig::FindNativeInputActionByTag(const FGameplayTag& InInputTag) const
 {
 	for(const FHeroInputActionConfig& InputActionConfig : NativeInputActions) //we iterate through our input action array looking for the tag we receive as input
 	{

@@ -2,6 +2,8 @@
 
 
 #include "HackAndSlash/Characters/CombatBaseCharacter.h"
+	#include "HackAndSlash/AbilitySystem/CombatAbilitySystemComponent.h" //include our ability system component
+#include "HackAndSlash/AbilitySystem/CombatAttributeSet.h" //Include our attribute set
 
 // Sets default values
 ACombatBaseCharacter::ACombatBaseCharacter()
@@ -13,6 +15,25 @@ ACombatBaseCharacter::ACombatBaseCharacter()
 	PrimaryActorTick.bStartWithTickEnabled = false;
 
 	GetMesh()->bReceivesDecals = false; //make our decals affect the ground only, not our character mesh
+
+	CombatAbilitySystemComponent = CreateDefaultSubobject<UCombatAbilitySystemComponent>(TEXT("CombatAbilitySystemComponent"));
+
+	CombatAttributeSet = CreateDefaultSubobject<UCombatAttributeSet>(TEXT("CombatAttributeSet"));
+}
+
+UAbilitySystemComponent* ACombatBaseCharacter::GetAbilitySystemComponent() const
+{
+	return GetCombatAbilitySystemComponent();
+}
+
+void ACombatBaseCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if(CombatAbilitySystemComponent)
+	{
+		CombatAbilitySystemComponent->InitAbilityActorInfo(this, this);
+	}
 }
 
 
