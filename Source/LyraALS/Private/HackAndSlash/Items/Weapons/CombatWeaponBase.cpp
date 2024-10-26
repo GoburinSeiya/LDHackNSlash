@@ -2,26 +2,23 @@
 
 
 #include "HackAndSlash/Items/Weapons/CombatWeaponBase.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 ACombatWeaponBase::ACombatWeaponBase()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
-}
+	WeaponStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WeaponStaticMesh"));
+	SetRootComponent(WeaponStaticMesh);
 
-// Called when the game starts or when spawned
-void ACombatWeaponBase::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
+	WeaponCollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollisionBox"));
+	WeaponCollisionBox->SetupAttachment(GetRootComponent()); //Set collision as child of root
+	//Initialize some values
+	WeaponCollisionBox->SetBoxExtent(FVector(20.f));
+	WeaponCollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}	
 
-// Called every frame
-void ACombatWeaponBase::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 
-}
 

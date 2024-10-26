@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "CombatWeaponBase.generated.h"
 
+class UBoxComponent;
+
 UCLASS()
 class LYRAALS_API ACombatWeaponBase : public AActor
 {
@@ -16,11 +18,14 @@ public:
 	ACombatWeaponBase();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	//Weapon Static Mesh
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapons")
+	UStaticMeshComponent* WeaponStaticMesh;
+	//Collision detection
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapons")
+	UBoxComponent* WeaponCollisionBox;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
+public:
+	//We create our public getters
+	FORCEINLINE UBoxComponent* GetWeaponCollisionBox() const{return WeaponCollisionBox;}
 };
