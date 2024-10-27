@@ -7,7 +7,7 @@
 #include "HackAndSlash/Components/Input/CombatInputComponent.h"
 #include "HackAndSlash/CombatGameplayTags.h"
 #include "HackAndSlash/AbilitySystem/CombatAbilitySystemComponent.h" //include our ability system component
-
+#include "HackAndSlash/DataAssets/StartupData/DataAsset_HeroStartUpData.h"
 #include "HackAndSlash/CombatDebugHelper.h"
 
 struct FInputActionValue;
@@ -15,12 +15,12 @@ struct FInputActionValue;
 void ACombatHeroCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-	if(CombatAbilitySystemComponent && CombatAbilitySystemComponent)
+	if(!CharacterStartUpDataBase.IsNull()) //check if we have assigned a valid data asset to our soft reference
 	{
-		const FString ASCText = FString::Printf(TEXT("Owner Actor: %s, Avatar Actor: %s"), *CombatAbilitySystemComponent->GetOwnerActor()->GetActorLabel(),
-			*CombatAbilitySystemComponent->GetAvatarActor()->GetActorLabel());
-		Debug::Print(TEXT("Ability system component valid") + ASCText + TEXT("\n"), FColor::Green);
-		Debug::Print(TEXT("Attribute set valid") + ASCText, FColor::Green);
+		if(UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpDataBase.LoadSynchronous()) //we validate our load call
+		{
+			LoadedData->GiveToAbilitySystemComponent(CombatAbilitySystemComponent);
+		}
 	}
 }
 

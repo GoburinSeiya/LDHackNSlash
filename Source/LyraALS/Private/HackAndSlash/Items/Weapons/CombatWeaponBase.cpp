@@ -12,6 +12,7 @@ ACombatWeaponBase::ACombatWeaponBase()
 
 	WeaponStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WeaponStaticMesh"));
 	SetRootComponent(WeaponStaticMesh);
+	WeaponStaticMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision); 
 
 	WeaponCollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("WeaponCollisionBox"));
 	WeaponCollisionBox->SetupAttachment(GetRootComponent()); //Set collision as child of root

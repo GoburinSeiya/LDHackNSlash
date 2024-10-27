@@ -33,6 +33,9 @@ void ACombatBaseCharacter::PossessedBy(AController* NewController)
 	if(CombatAbilitySystemComponent)
 	{
 		CombatAbilitySystemComponent->InitAbilityActorInfo(this, this);
+
+		//ensure(!CharacterStartUpDataBase.IsNull()); /** If this returns false then this macro will trigger a breakpoint in debug mode, outputing messages to the editor log **/
+		ensureMsgf(!CharacterStartUpDataBase.IsNull(), TEXT("Forgot to assign startup data to %s"), *GetName()); //we print a error message with the name of the character
 	}
 }
 

@@ -31,5 +31,6 @@ private:
 	//			Accessibility	Editability in BP	Where to save variable	meta access
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="CharacterData", meta = (AllowPrivateAccess = "true"))
 	UDataAsset_InputConfig* InputConfigDataAsset; //We bind our input config
+#pragma endregion
 	
 };

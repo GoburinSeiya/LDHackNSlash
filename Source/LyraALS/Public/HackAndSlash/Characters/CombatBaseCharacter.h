@@ -10,7 +10,7 @@
 
 class UCombatAbilitySystemComponent;
 class UCombatAttributeSet;
-
+class UDataAsset_StartUpDataBase;
 UCLASS()
 class LYRAALS_API ACombatBaseCharacter : public ACharacter, public IAbilitySystemInterface
 {
@@ -20,7 +20,7 @@ public:
 	// Sets default values for this character's properties
 	ACombatBaseCharacter();
 	//~ Begin IAbilitySystemInterface Interface.
-	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	//~ End IAbilitySystemInterface Interface.
 	
 protected:
@@ -34,7 +34,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
 	UCombatAttributeSet* CombatAttributeSet;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AbilitySystem")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CharacterData")
+	TSoftObjectPtr<UDataAsset_StartUpDataBase> CharacterStartUpDataBase;
 
 public:
 	//We create public geters to get direct access in C++
