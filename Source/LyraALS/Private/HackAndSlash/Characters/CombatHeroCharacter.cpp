@@ -8,9 +8,17 @@
 #include "HackAndSlash/CombatGameplayTags.h"
 #include "HackAndSlash/AbilitySystem/CombatAbilitySystemComponent.h" //include our ability system component
 #include "HackAndSlash/DataAssets/StartupData/DataAsset_HeroStartUpData.h"
+#include "HackAndSlash/Components/Combat/HeroCombatComponent.h"
+
 #include "HackAndSlash/CombatDebugHelper.h"
 
 struct FInputActionValue;
+
+
+ACombatHeroCharacter::ACombatHeroCharacter()
+{
+	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
+}
 
 void ACombatHeroCharacter::PossessedBy(AController* NewController)
 {
