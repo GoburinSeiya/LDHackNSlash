@@ -22,6 +22,12 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UInputAction* InputAction;
+
+	//function to validate InputTag
+	bool IsValid() const
+	{
+		return InputTag.IsValid() && InputAction;
+	}
 };
 
 /**
@@ -41,4 +47,7 @@ public:
 	TArray<FHeroInputActionConfig> NativeInputActions; //We create a array for our InputActions
 
 	UInputAction* FindNativeInputActionByTag(const FGameplayTag& InInputTag) const; //We create a function to bind our inputs properly
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = "InputTag"))
+	TArray<FHeroInputActionConfig> AbilityInputActions;
 };

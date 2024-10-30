@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "HackAndSlash/Characters/CombatBaseCharacter.h"
+#include "GameplayTagContainer.h"
 #include "CombatHeroCharacter.generated.h"
 
 class UDataAsset_InputConfig;
@@ -37,6 +38,10 @@ private:
 	//			Accessibility	Editability in BP	Where to save variable	meta access
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="CharacterData", meta = (AllowPrivateAccess = "true"))
 	UDataAsset_InputConfig* InputConfigDataAsset; //We bind our input config
+
+	// we make functions for our ability inputs
+	void Input_AbilityInputPressed(FGameplayTag InInputTag);
+	void Input_AbilityInputReleased(FGameplayTag InInputTag);
 #pragma endregion
 
 public:

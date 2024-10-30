@@ -9,6 +9,7 @@
 #include "HackAndSlash/AbilitySystem/CombatAbilitySystemComponent.h" //include our ability system component
 #include "HackAndSlash/DataAssets/StartupData/DataAsset_HeroStartUpData.h"
 #include "HackAndSlash/Components/Combat/HeroCombatComponent.h"
+#include "HackAndSlash/Components/Input/CombatInputComponent.h"
 
 #include "HackAndSlash/CombatDebugHelper.h"
 
@@ -35,11 +36,28 @@ void ACombatHeroCharacter::PossessedBy(AController* NewController)
 void ACombatHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	checkf(InputConfigDataAsset, TEXT("Forgot to assign a valid data asset as input config"))
+
+	//We create a ref to our combat component
+	UCombatInputComponent* CombatInputComponent = CastChecked<UCombatInputComponent>(PlayerInputComponent);
+
+	//We call the Bind function from our CombatInputComponent and pass down its inputs
+	CombatInputComponent->BindAbilityInputAction(InputConfigDataAsset, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
+	//													Data asset		Actor performing		Pressed callback					released callback
 }
 
 void ACombatHeroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void ACombatHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
+{
+	CombatAbilitySystemComponent->OnAbilityInputPressed(InInputTag); 
+}
+
+void ACombatHeroCharacter::Input_AbilityInputReleased(FGameplayTag InInputTag)
+{
+	CombatAbilitySystemComponent->OnAbilityInputReleased(InInputTag); 
 }
 

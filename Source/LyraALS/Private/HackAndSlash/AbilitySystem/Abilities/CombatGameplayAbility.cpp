@@ -2,7 +2,9 @@
 
 
 #include "HackAndSlash/AbilitySystem/Abilities/CombatGameplayAbility.h"
+#include "HackAndSlash/AbilitySystem/Abilities/CombatGameplayAbility.h"
 #include "HackAndSlash/AbilitySystem/CombatAbilitySystemComponent.h"
+#include "HackAndSlash/Components/Combat/PawnCombatComponent.h"
 
 void UCombatGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) //This function will be called right after an ability has been added to our ability system component
 {
@@ -31,3 +33,16 @@ void UCombatGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Handle,
 		}
 	}
 }
+
+UPawnCombatComponent* UCombatGameplayAbility::GetPawCombatComponentFromActorInfo() const
+{
+	//Iterates through the components the actor hass and returns the class that matches with the result
+	return GetAvatarActorFromActorInfo()->FindComponentByClass<UPawnCombatComponent>();
+}
+
+UCombatAbilitySystemComponent* UCombatGameplayAbility::GetGameplayAbilityComponentFromActorInfo() const
+{
+	return Cast<UCombatAbilitySystemComponent>(CurrentActorInfo->AbilitySystemComponent);
+}
+
+
