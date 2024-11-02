@@ -2,4 +2,9 @@
 
 
 #include "HackAndSlash/AnimInstances/Hero/CombatHeroLinkedAnimInstance.h"
+#include "HackAndSlash/AnimInstances/Hero/CombatHeroAnimInstance.h"
 
+UCombatHeroAnimInstance* UCombatHeroLinkedAnimInstance::GetCombatHeroAnimInstance() const
+{
+	return Cast<UCombatHeroAnimInstance>(GetOwningComponent()->GetAnimInstance());
+}

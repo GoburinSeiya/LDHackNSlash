@@ -17,4 +17,8 @@ namespace CombatGameplayTags
 
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_Equip_Sword); //tag used to send event of equipping weapon
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_Unequip_Sword); //tag used to send event of unequipping weapon
+
+	/** Player Ability Tags **/
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Equip_Sword);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Unequip_Sword);
 }

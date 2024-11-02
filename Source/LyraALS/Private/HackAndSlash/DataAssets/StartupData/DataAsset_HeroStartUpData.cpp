@@ -5,10 +5,7 @@
 #include "HackAndSlash/AbilitySystem/Abilities/CombatGameplayAbility.h"
 #include "HackAndSlash/AbilitySystem/CombatAbilitySystemComponent.h"
 
-bool FCombatHeroAbilitySet::IsValid() const
-{
-	return InputTag.IsValid() && AbilityToGrant;
-}
+
 
 void UDataAsset_HeroStartUpData::GiveToAbilitySystemComponent(UCombatAbilitySystemComponent* InASCToGive,
 	int32 ApplyLevel)
