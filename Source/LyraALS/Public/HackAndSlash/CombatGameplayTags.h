@@ -11,6 +11,8 @@ namespace CombatGameplayTags
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Look);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_EquipSword);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_UnequipSword);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_LightAttack_Sword);  
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_HeavyAttack_Sword);  
 
 	/** Player tags **/
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Weapon_Sword); //tag used to register weapon
@@ -21,4 +23,11 @@ namespace CombatGameplayTags
 	/** Player Ability Tags **/
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Equip_Sword);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Unequip_Sword);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Attack_Light_Sword);  
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Attack_Heavy_Sword);
+
+	/** Player status tags **/
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_JumpToFinisher); //tag used to jump to heavy combo end from light attacks
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_LiftoffCombo);
+	
 }

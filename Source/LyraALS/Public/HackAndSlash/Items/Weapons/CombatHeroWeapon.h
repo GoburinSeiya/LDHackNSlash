@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "HackAndSlash/Items/Weapons/CombatWeaponBase.h"
 #include "HackAndSlash/CombatTypes/CombatStructTypes.h"
+#include "GameplayAbilitySpecHandle.h"
 #include "CombatHeroWeapon.generated.h"
 
 
@@ -19,5 +20,15 @@ class LYRAALS_API ACombatHeroWeapon : public ACombatWeaponBase
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="WeaponData")
 	FCombatHeroWeaponData HeroWeaponData;
+
+	UFUNCTION(BlueprintCallable)
+	void AssignGrantedAbilitySpecHandles(const TArray<FGameplayAbilitySpecHandle>& InSpecHandles);
+
+	//getter func
+	UFUNCTION(BlueprintPure)
+	TArray<FGameplayAbilitySpecHandle> GetGrantedAbilitySpecHandles() const;
+	
+private:
+	TArray<FGameplayAbilitySpecHandle> GrantedAbilitySpecHandles;
 	
 };

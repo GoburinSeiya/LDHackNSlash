@@ -35,7 +35,7 @@ protected:
 
 	//Helper function to access PawnCombatComponent
 	UFUNCTION(BlueprintPure, Category="Combat|Ability")
-	UPawnCombatComponent* GetPawCombatComponentFromActorInfo() const;
+	UPawnCombatComponent* GetPawnCombatComponentFromActorInfo() const;
 
 	//Helper function to access AbilitySystemComponent
 	UFUNCTION(BlueprintPure, Category="Combat|Ability")

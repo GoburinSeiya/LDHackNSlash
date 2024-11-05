@@ -20,15 +20,15 @@ class LYRAALS_API UCombatHeroGameplayAbility : public UCombatGameplayAbility
 
 public:
 	//Helper function to get our hero character, this one isnt const, check in definition
-	UFUNCTION(BlueprintPure, Category = "Comabat|Ability")
+	UFUNCTION(BlueprintPure, Category = "Combat|Ability")
 	ACombatHeroCharacter* GetHeroCharacterFromActorInfo();
 
 	//Helper funtion to get player controller
-	UFUNCTION(BlueprintPure, Category = "Comabat|Ability")
+	UFUNCTION(BlueprintPure, Category = "Combat|Ability")
 	ACombatHeroController* GetHeroControllerFromActorInfo();
 
 	//Helper function to get player combat component
-	UFUNCTION(BlueprintPure, Category = "Comabat|Ability")
+	UFUNCTION(BlueprintPure, Category = "Combat|Ability")
 	UHeroCombatComponent* GetHeroCombatComponentFromActorInfo();
 	
 private:

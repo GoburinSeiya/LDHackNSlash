@@ -34,7 +34,7 @@ void UCombatGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Handle,
 	}
 }
 
-UPawnCombatComponent* UCombatGameplayAbility::GetPawCombatComponentFromActorInfo() const
+UPawnCombatComponent* UCombatGameplayAbility::GetPawnCombatComponentFromActorInfo() const
 {
 	//Iterates through the components the actor hass and returns the class that matches with the result
 	return GetAvatarActorFromActorInfo()->FindComponentByClass<UPawnCombatComponent>();
