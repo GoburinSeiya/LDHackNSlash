@@ -46,4 +46,10 @@ private:
 
 public:
 	FORCEINLINE UHeroCombatComponent* GetHeroCombatComponent() const { return HeroCombatComponent; } //Combat component getter function
+	UPROPERTY(BlueprintReadWrite, Category = "Combat")
+	bool bPerformExtendedCombo;
+	bool bIsHeavyAttacking;
+	UPROPERTY(BlueprintReadWrite, Category = "Combat")
+	int CurrentLigthAttackString;
+	
 };

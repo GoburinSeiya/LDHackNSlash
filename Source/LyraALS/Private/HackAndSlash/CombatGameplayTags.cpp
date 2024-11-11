@@ -18,8 +18,11 @@ namespace CombatGameplayTags
 	/** Player tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Player_Weapon_Sword, "Player.Weapon.Sword");
 
+	/** Event tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_Equip_Sword, "Player.Event.Equip.Sword");
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_Unequip_Sword, "Player.Event.Unequip.Sword");
+	UE_DEFINE_GAMEPLAY_TAG(Player_Event_BeginBuffer, "Player.Event.BeginBuffer");
+	UE_DEFINE_GAMEPLAY_TAG(Player_Event_WaitComboExecute, "Player.Event.WaitComboExecute");
 
 	/** Player Ability Tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Equip_Sword, "Player.Ability.Equip.Sword");
@@ -29,5 +32,6 @@ namespace CombatGameplayTags
 
 	/** Player status tags **/
 	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_JumpToFinisher, "Player.Status.JumpToFinisher"); //tag used to jump to heavy combo end from light attacks
-	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_LiftoffCombo, "Player.Status.LiftoffCombo"); 
+	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_LiftoffCombo, "Player.Status.LiftoffCombo");
+	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_IsHeavyAttacking, "Player.Status.IsHeavyAttacking");
 }
