@@ -2,7 +2,7 @@
 
 
 #include "HackAndSlash/CombatTypes/CombatStructTypes.h"
-#include "HackAndSlash/AbilitySystem/Abilities/CombatGameplayAbility.h"
+#include "HackAndSlash/AbilitySystem/Abilities/CombatHeroGameplayAbility.h"
 
 
 bool FCombatHeroAbilitySet::IsValid() const

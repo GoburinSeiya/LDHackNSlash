@@ -5,7 +5,7 @@
 #include "CombatStructTypes.generated.h"
 
 class UCombatHeroLinkedAnimInstance; 
-class UCombatGameplayAbility;
+class UCombatHeroGameplayAbility;
 class UInputMappingContext;
 
 USTRUCT(BlueprintType)
@@ -17,7 +17,7 @@ struct FCombatHeroAbilitySet
 	FGameplayTag InputTag; //dont forget to add header file
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<UCombatGameplayAbility> AbilityToGrant;
+	TSubclassOf<UCombatHeroGameplayAbility> AbilityToGrant;
 	
 	//validate helper func
 	/** why do we do this? what we want to validate is AbilityToGrant, to do this by other means would require the header file, this is something we do not want to do inside a header file,
