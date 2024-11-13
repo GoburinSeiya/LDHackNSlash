@@ -6,6 +6,9 @@
 #include "HackAndSlash/AbilitySystem/Abilities/CombatGameplayAbility.h"
 #include "CombatEnemyGameplayAbility.generated.h"
 
+class ACombatEnemyCharacter;
+class UEnemyCombatComponent;
+
 /**
  * 
  */
@@ -13,5 +16,15 @@ UCLASS()
 class LYRAALS_API UCombatEnemyGameplayAbility : public UCombatGameplayAbility
 {
 	GENERATED_BODY()
+
+public:
+	UFUNCTION(BlueprintPure, Category = "Combat|Ability")
+	ACombatEnemyCharacter* GetEnemyCharacterFromActorInfo();
+	
+	UFUNCTION(BlueprintPure, Category = "Combat|Ability")
+	UEnemyCombatComponent* GetEnemyCombatComponentFromActorInfo();
+
+protected:
+	TWeakObjectPtr<ACombatEnemyCharacter> CachedEnemyCharacter;
 	
 };
