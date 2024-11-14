@@ -19,12 +19,22 @@ class LYRAALS_API ACombatEnemyCharacter : public ACombatBaseCharacter
 
 public:
 	ACombatEnemyCharacter(); //We create a constructor
+	
+	//~ Begin IPawnCombatComponent Interface.
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+	//~ End IPawnCombatComponent Interface.
 
 protected:
+	//~ Begin APawn Interface.
+	virtual void PossessedBy(AController* NewController) override;
+	//~ End APawn Interface
 	//We declare our combat component, dont forget to construct it in construction script
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
 	UEnemyCombatComponent* EnemyCombatComponent;
 
+private:
+	void InitEnemyStartUpData();
+	
 public:
 	//Getter func
 	FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const {return  EnemyCombatComponent;}

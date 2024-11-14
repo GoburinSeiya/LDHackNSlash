@@ -4,6 +4,8 @@
 #include "HackAndSlash/CombatFunctionLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "HackAndSlash/AbilitySystem/CombatAbilitySystemComponent.h"  
+#include "HackAndSlash/Components/Combat/PawnCombatComponent.h"
+#include "HackAndSlash/Interfaces/PawnCombatInterface.h"
 
 UCombatAbilitySystemComponent* UCombatFunctionLibrary::NativeGetCombatASCFromActor(AActor* InActor)
 {
@@ -48,4 +50,26 @@ void UCombatFunctionLibrary::BP_DoesActorHaveTag(AActor* InActor, FGameplayTag I
 {
 	//					if actor hast tag c++ func					return enum as yes			return enum no if false
 	OutConfirmType = NativeActorDoesHaveTag(InActor, InTagToCheck)? ECombatConfirmType::Yes : ECombatConfirmType::No;
+}
+
+UPawnCombatComponent* UCombatFunctionLibrary::NativeGetPawnCombatComponentFromActor(AActor* InActor)
+{
+	check(InActor);
+
+	if(IPawnCombatInterface* PawnCombatInterface = Cast<IPawnCombatInterface>(InActor))
+	{
+		return PawnCombatInterface->GetPawnCombatComponent();
+	}
+
+	return nullptr;
+}
+
+UPawnCombatComponent* UCombatFunctionLibrary::BP_GetPawnCombatComponentFromActor(AActor* InActor,
+	ECombatValidType& OutValidType)
+{
+	UPawnCombatComponent* CombatComponent = NativeGetPawnCombatComponentFromActor(InActor);
+
+	OutValidType = CombatComponent? ECombatValidType::Valid : ECombatValidType::Invalid;
+
+	return CombatComponent;
 }

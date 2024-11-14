@@ -4,17 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "HackAndSlash/CombatTypes/CombatEnumTypes.h"
 #include "CombatFunctionLibrary.generated.h"
 
 class UCombatAbilitySystemComponent;
-
-//enum definition
-UENUM()
-enum class ECombatConfirmType :uint8
-{
-	Yes,
-	No
-};
+class UPawnCombatComponent;
 
 /**
  * 
@@ -40,4 +34,9 @@ public:
 																				//this meta specifier allows us to choose the name displayed in editor;
 																													//this one having multiple execute pins from our declared enum;
 	static void BP_DoesActorHaveTag(AActor* InActor, FGameplayTag InTagToCheck, ECombatConfirmType& OutConfirmType);
+
+	static UPawnCombatComponent* NativeGetPawnCombatComponentFromActor(AActor* InActor);
+
+	UFUNCTION(BlueprintCallable, Category="Combat|FunctionLibrary", meta = (DisplayName = "Get Pawn Combat Component", ExpandEnumAsExecs = "OutValidType"))
+	static UPawnCombatComponent* BP_GetPawnCombatComponentFromActor(AActor* InActor, ECombatValidType& OutValidType);
 };

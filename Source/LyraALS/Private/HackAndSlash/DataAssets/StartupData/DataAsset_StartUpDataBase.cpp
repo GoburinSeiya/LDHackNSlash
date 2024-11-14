@@ -14,6 +14,21 @@ void UDataAsset_StartUpDataBase::GiveToAbilitySystemComponent(UCombatAbilitySyst
 	GrantAbilities(ActivateOnGivenAbilities, InASCToGive, ApplyLevel);
 	//Call the function to grant abilities on reaction
 	GrantAbilities(ReactiveAbilities, InASCToGive, ApplyLevel);
+
+	if(!StartupGameplayEffects.IsEmpty())
+	{
+		for(const TSubclassOf<UGameplayEffect>& EffectClass : StartupGameplayEffects)
+		{
+			if(!EffectClass) continue;
+
+			UGameplayEffect* EffectCDO = EffectClass->GetDefaultObject<UGameplayEffect>();
+			InASCToGive->ApplyGameplayEffectToSelf(
+				EffectCDO,
+				ApplyLevel,
+				InASCToGive->MakeEffectContext()
+			);
+		}
+	}
 }
 
 void UDataAsset_StartUpDataBase::GrantAbilities(const TArray<TSubclassOf<UCombatGameplayAbility>>& InAbilitiesToGive,

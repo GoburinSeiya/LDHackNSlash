@@ -34,4 +34,9 @@ namespace CombatGameplayTags
 	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_JumpToFinisher, "Player.Status.JumpToFinisher"); //tag used to jump to heavy combo end from light attacks
 	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_LiftoffCombo, "Player.Status.LiftoffCombo");
 	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_IsHeavyAttacking, "Player.Status.IsHeavyAttacking");
+	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_IsLightAttacking, "Player.Status.IsLightAttacking");
+
+	/** Enemy tags **/
+	UE_DEFINE_GAMEPLAY_TAG(Enemy_Weapon, "Enemy.Weapon");
+	
 }

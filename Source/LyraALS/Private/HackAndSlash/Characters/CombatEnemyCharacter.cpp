@@ -6,6 +6,10 @@
 #include "HackAndSlash/AbilitySystem/Abilities/CombatEnemyGameplayAbility.h"
 #include "HackAndSlash/Components/Combat/EnemyCombatComponent.h"
 #include "HackAndSlash/AbilitySystem/Abilities/CombatEnemyGameplayAbility.h"
+#include "Engine/AssetManager.h"
+#include "HackAndSlash/DataAssets/StartupData/DataAsset_EnemyStartUpDataBase.h"
+
+#include "HackAndSlash/CombatDebugHelper.h"
 
 
 ACombatEnemyCharacter::ACombatEnemyCharacter()
@@ -28,4 +32,37 @@ ACombatEnemyCharacter::ACombatEnemyCharacter()
 	//												name
 	EnemyCombatComponent = CreateDefaultSubobject<UEnemyCombatComponent>("EnemyCombatComponent");
 	
+}
+
+UPawnCombatComponent* ACombatEnemyCharacter::GetPawnCombatComponent() const
+{
+	return EnemyCombatComponent;
+}
+
+void ACombatEnemyCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+	InitEnemyStartUpData();
+}
+
+void ACombatEnemyCharacter::InitEnemyStartUpData()
+{
+	if(CharacterStartUpDataBase.IsNull())
+		return;
+
+	UAssetManager::GetStreamableManager().RequestAsyncLoad(
+		CharacterStartUpDataBase.ToSoftObjectPath(),
+		FStreamableDelegate::CreateLambda(
+			[this]()
+			{
+				if(UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpDataBase.Get())
+				{
+					LoadedData->GiveToAbilitySystemComponent(CombatAbilitySystemComponent);
+
+					Debug::Print(TEXT("Enemy Startup Data loaded"), FColor::Green);
+				}
+			}
+			//[]	capture list () func inputs {} body
+			) //nameless func that we can declare and define in the same line
+		);
 }
