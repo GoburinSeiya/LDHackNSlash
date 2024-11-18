@@ -20,5 +20,8 @@ public:
 	//func to get weapon by tag, parent already has access to FGameplayTag so no need to include its header file
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	ACombatHeroWeapon* GetHeroCarriedWeaponByTag(FGameplayTag InWeaponTag) const;
+
+	virtual void OnHitTargetActor(AActor* HitActor) override;
+	virtual void OnWeaponPulledFromTargetActor(AActor* InteractedActor) override;
 	
 };

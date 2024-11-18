@@ -58,8 +58,6 @@ void ACombatEnemyCharacter::InitEnemyStartUpData()
 				if(UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpDataBase.Get())
 				{
 					LoadedData->GiveToAbilitySystemComponent(CombatAbilitySystemComponent);
-
-					Debug::Print(TEXT("Enemy Startup Data loaded"), FColor::Green);
 				}
 			}
 			//[]	capture list () func inputs {} body

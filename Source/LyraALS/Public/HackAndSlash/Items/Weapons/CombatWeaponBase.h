@@ -8,6 +8,10 @@
 
 class UBoxComponent;
 
+DECLARE_DELEGATE_OneParam(FOnTargetInteractedDelegate, AActor*)
+
+
+
 UCLASS()
 class LYRAALS_API ACombatWeaponBase : public AActor
 {
@@ -17,6 +21,9 @@ public:
 	// Sets default values for this actor's properties
 	ACombatWeaponBase();
 
+	FOnTargetInteractedDelegate OnWeaponHitTarget; //begin overlap
+	FOnTargetInteractedDelegate OnWeaponPulledFromTarget; //end overlap
+
 protected:
 	//Weapon Static Mesh
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapons")
@@ -24,6 +31,12 @@ protected:
 	//Collision detection
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapons")
 	UBoxComponent* WeaponCollisionBox;
+
+	UFUNCTION()
+	virtual void OnCollisionBoxBeginOverlap( UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
+
+	UFUNCTION()
+	virtual void OnCollisionBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 public:
 	//We create our public getters
