@@ -4,7 +4,9 @@
 #include "HackAndSlash/AbilitySystem/Abilities/CombatHeroGameplayAbility.h"
 #include "HackAndSlash/Characters/CombatHeroCharacter.h"
 #include "HackAndSlash/Controllers/CombatHeroController.h"
+#include "HackAndSlash/AbilitySystem/CombatAbilitySystemComponent.h"  
 #include "HackAndSlash/Components/Combat/HeroCombatComponent.h"
+#include "HackAndSlash/CombatGameplayTags.h"
 
 ACombatHeroCharacter* UCombatHeroGameplayAbility::GetHeroCharacterFromActorInfo()
 {
@@ -30,4 +32,33 @@ ACombatHeroController* UCombatHeroGameplayAbility::GetHeroControllerFromActorInf
 UHeroCombatComponent* UCombatHeroGameplayAbility::GetHeroCombatComponentFromActorInfo()
 {
 	return GetHeroCharacterFromActorInfo()->GetHeroCombatComponent();
+}
+
+FGameplayEffectSpecHandle UCombatHeroGameplayAbility::MakeHeroDamageSpecHandle(TSubclassOf<UGameplayEffect> EffectClass,
+	float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InCurrentComboCount)
+{
+	check(EffectClass);
+
+	//Construct Spec Handle
+	FGameplayEffectContextHandle ContextHandle = GetAbilitySystemComponentFromActorInfo()->MakeEffectContext();
+	ContextHandle.SetAbility(this);
+	ContextHandle.AddSourceObject(GetAvatarActorFromActorInfo());
+	ContextHandle.AddInstigator(GetAvatarActorFromActorInfo(), GetAvatarActorFromActorInfo());
+
+	FGameplayEffectSpecHandle EffectSpecHandle = GetAbilitySystemComponentFromActorInfo()->MakeOutgoingSpec(
+		EffectClass,
+		GetAbilityLevel(),
+		ContextHandle
+	);
+
+	//Store inside our handle data our weapons base damage
+	EffectSpecHandle.Data->SetSetByCallerMagnitude(CombatGameplayTags::Shared_SetByCaller_BaseDamage, InWeaponBaseDamage);
+
+	if(InCurrentAttackTypeTag.IsValid())
+	{
+		//Store inside our EffectSpecHandle Data The current combo count
+		EffectSpecHandle.Data->SetSetByCallerMagnitude(InCurrentAttackTypeTag, InCurrentComboCount);
+	}
+	
+	return EffectSpecHandle;
 }

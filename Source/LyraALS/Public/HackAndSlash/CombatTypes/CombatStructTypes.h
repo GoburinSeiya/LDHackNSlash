@@ -2,6 +2,7 @@
 
 #pragma once
 #include "GameplayTagContainer.h"
+#include "ScalableFloat.h"
 #include "CombatStructTypes.generated.h"
 
 class UCombatHeroLinkedAnimInstance; 
@@ -34,12 +35,15 @@ struct FCombatHeroWeaponData
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<UCombatHeroLinkedAnimInstance> WeaponAnimInstanceToLink;
 
+	//Weapon unique IMC
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty="InputTag"))
+	UInputMappingContext* WeaponInputMappingContext;
+	
 	//Array to store weapon unique abilities
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty="InputTag"))
 	TArray<FCombatHeroAbilitySet> DefaultWeaponAbilities;
 
-	//Weapon unique IMC
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty="InputTag"))
-	UInputMappingContext* WeaponInputMappingContext;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FScalableFloat WeaponBaseDamage;
 };
 
