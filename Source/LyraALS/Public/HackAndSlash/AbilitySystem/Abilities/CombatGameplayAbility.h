@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
+#include"HackAndSlash/CombatTypes/CombatEnumTypes.h"
 #include "CombatGameplayAbility.generated.h"
+
 
 class UPawnCombatComponent;
 class UCombatAbilitySystemComponent;
@@ -40,4 +42,9 @@ protected:
 	//Helper function to access AbilitySystemComponent
 	UFUNCTION(BlueprintPure, Category="Combat|Ability")
 	UCombatAbilitySystemComponent* GetGameplayAbilityComponentFromActorInfo() const;
+
+	FActiveGameplayEffectHandle NativeApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle);
+
+	UFUNCTION(BlueprintCallable, Category="Combat|Ability", meta =(DisplayName = "Apply Gameplay Effect Spec Handle To Target Actor",ExpandEnumAsExecs = "OutSuccessType"))
+	FActiveGameplayEffectHandle BP_ApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle, ECombatSuccessType& OutSuccessType);
 };

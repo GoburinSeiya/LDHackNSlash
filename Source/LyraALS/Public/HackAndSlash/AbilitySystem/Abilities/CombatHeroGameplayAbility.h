@@ -30,6 +30,10 @@ public:
 	//Helper function to get player combat component
 	UFUNCTION(BlueprintPure, Category = "Combat|Ability")
 	UHeroCombatComponent* GetHeroCombatComponentFromActorInfo();
+
+	UFUNCTION(BlueprintPure, Category = "Combat|Ability")
+	FGameplayEffectSpecHandle MakeHeroDamageSpecHandle ( TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag,
+		int32 InCurrentComboCount);
 	
 private:
 	//We make a member variable to store our Avatar actor info cast from the Getter function

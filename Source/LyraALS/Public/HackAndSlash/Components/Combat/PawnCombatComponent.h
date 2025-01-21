@@ -9,6 +9,13 @@
 
 class ACombatWeaponBase;
 
+UENUM(BlueprintType)
+enum class EToggleDamageType : uint8
+{
+	CurrentEquippedWeapon,
+	LeftHand,
+	RightHand
+};
 /**
  * 
  */
@@ -31,6 +38,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Combat|Weapons")
 	ACombatWeaponBase* GetCharacterCurrentlyEquippedWeapon() const;
 	
+	UFUNCTION(BlueprintCallable, Category = "Combat|Weapons")
+	void ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType = EToggleDamageType::CurrentEquippedWeapon);
+
+	virtual void OnHitTargetActor(AActor* HitActor);
+	virtual void OnWeaponPulledFromTargetActor(AActor* InteractedActor);
+
+protected:
+	TArray<AActor*> OverlappedActors;
 	
 private:
 	TMap<FGameplayTag, ACombatWeaponBase*> CharacterCarriedWeaponMap; /** This map will allow us to store multiple weapons that can be retrieved through a gameplay tag, remember a map is kind of like a dictionary

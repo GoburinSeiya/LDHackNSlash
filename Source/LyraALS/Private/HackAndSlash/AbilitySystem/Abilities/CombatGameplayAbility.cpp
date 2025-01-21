@@ -5,6 +5,7 @@
 #include "HackAndSlash/AbilitySystem/Abilities/CombatGameplayAbility.h"
 #include "HackAndSlash/AbilitySystem/CombatAbilitySystemComponent.h"
 #include "HackAndSlash/Components/Combat/PawnCombatComponent.h"
+#include "AbilitySystemBlueprintLibrary.h"
 
 void UCombatGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) //This function will be called right after an ability has been added to our ability system component
 {
@@ -43,6 +44,30 @@ UPawnCombatComponent* UCombatGameplayAbility::GetPawnCombatComponentFromActorInf
 UCombatAbilitySystemComponent* UCombatGameplayAbility::GetGameplayAbilityComponentFromActorInfo() const
 {
 	return Cast<UCombatAbilitySystemComponent>(CurrentActorInfo->AbilitySystemComponent);
+}
+
+FActiveGameplayEffectHandle UCombatGameplayAbility::NativeApplyEffectSpecHandleToTarget(AActor* TargetActor,
+	const FGameplayEffectSpecHandle& InSpecHandle)
+{
+	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+	
+	check(TargetASC && InSpecHandle.IsValid());
+	
+	//In order to apply a spec handle we need to use this function
+	return GetAbilitySystemComponentFromActorInfo()->ApplyGameplayEffectSpecToTarget(
+		*InSpecHandle.Data,
+		TargetASC
+	);
+}
+
+FActiveGameplayEffectHandle UCombatGameplayAbility::BP_ApplyEffectSpecHandleToTarget(AActor* TargetActor,
+	const FGameplayEffectSpecHandle& InSpecHandle, ECombatSuccessType& OutSuccessType)
+{
+	FActiveGameplayEffectHandle  ActiveGameplayEffectHandle = NativeApplyEffectSpecHandleToTarget(TargetActor, InSpecHandle);
+	
+	OutSuccessType = ActiveGameplayEffectHandle.WasSuccessfullyApplied()? ECombatSuccessType::Successful : ECombatSuccessType::Failed;
+
+	return ActiveGameplayEffectHandle;
 }
 
 

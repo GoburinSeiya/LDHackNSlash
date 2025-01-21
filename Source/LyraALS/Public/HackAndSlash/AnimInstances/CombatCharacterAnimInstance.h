@@ -27,4 +27,10 @@ protected:
 	
 	UPROPERTY()
 	UCharacterMovementComponent* OwningMovementComponent; //property access
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="AnimData|LocomotionData")
+	float GroundSpeed;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="AnimData|LocomotionData")
+	bool bHasAcceleration;
 };

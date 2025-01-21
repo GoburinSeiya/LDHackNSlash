@@ -20,6 +20,10 @@ class LYRAALS_API ACombatHeroCharacter : public ACombatBaseCharacter
 
 public:
 	ACombatHeroCharacter();
+
+	//~ Begin IPawnCombatComponent Interface.
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+	//~ End IPawnCombatComponent Interface.
 	
 protected:
 	//~ Begin APawn Interface.
@@ -50,6 +54,5 @@ public:
 	bool bPerformExtendedCombo;
 	bool bIsHeavyAttacking;
 	UPROPERTY(BlueprintReadWrite, Category = "Combat")
-	int CurrentLigthAttackString;
-	
+	int CurrentLigthAttackString = 1;
 };

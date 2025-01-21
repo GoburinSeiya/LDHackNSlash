@@ -7,7 +7,7 @@
 
 void UCombatCharacterAnimInstance::NativeInitializeAnimation()
 {
-	OwningCharacter= Cast<ACombatBaseCharacter>(TryGetPawnOwner());
+	OwningCharacter = Cast<ACombatBaseCharacter>(TryGetPawnOwner());
 
 	if(OwningCharacter) //check if character is valid
 	{
@@ -21,4 +21,6 @@ void UCombatCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSe
 	{
 		return;
 	}
+
+	GroundSpeed = OwningCharacter->GetVelocity().Size2D();
 }

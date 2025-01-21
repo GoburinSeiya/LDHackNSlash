@@ -8,6 +8,7 @@
 
 class UCombatGameplayAbility;
 class UCombatAbilitySystemComponent;
+class UGameplayEffect;
 
 /**
  * 
@@ -25,6 +26,8 @@ protected:
 	TArray< TSubclassOf<UCombatGameplayAbility>> ActivateOnGivenAbilities; //Array to store abilities that must be activated OnGiven
 	UPROPERTY(EditDefaultsOnly, Category = "StarUpData")
 	TArray< TSubclassOf<UCombatGameplayAbility>> ReactiveAbilities; //Array to store abilities that must be activated on hit or on death, that are triggered upon certain conditions
+	UPROPERTY(EditDefaultsOnly, Category = "StarUpData")
+	TArray< TSubclassOf < UGameplayEffect > > StartupGameplayEffects;
 
 	//function to grant ability
 	void GrantAbilities(const TArray< TSubclassOf<UCombatGameplayAbility>>& InAbilitiesToGive, UCombatAbilitySystemComponent* InASCToGive, int32 ApplyLevel = 1);
