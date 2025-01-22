@@ -25,6 +25,8 @@ class LYRAALS_API UCombatAttributeSet : public UAttributeSet
 public:
 	UCombatAttributeSet();
 
+	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData &Data) override;
+
 	//This is how we define an attribute
 	UPROPERTY(BlueprintReadOnly, Category="Health")
 	FGameplayAttributeData CurrentHealth;
@@ -69,4 +71,8 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category="Damage")
 	FGameplayAttributeData DamageTaken;
 	ATTRIBUTE_ACCESSORS(UCombatAttributeSet, DamageTaken)
+
+	UPROPERTY(BlueprintReadOnly, Category="Damage")
+	FGameplayAttributeData StanceDamageTaken;
+	ATTRIBUTE_ACCESSORS(UCombatAttributeSet, StanceDamageTaken)
 };

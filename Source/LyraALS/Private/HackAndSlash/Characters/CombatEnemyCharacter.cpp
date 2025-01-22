@@ -5,7 +5,6 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HackAndSlash/AbilitySystem/Abilities/CombatEnemyGameplayAbility.h"
 #include "HackAndSlash/Components/Combat/EnemyCombatComponent.h"
-#include "HackAndSlash/AbilitySystem/Abilities/CombatEnemyGameplayAbility.h"
 #include "Engine/AssetManager.h"
 #include "HackAndSlash/DataAssets/StartupData/DataAsset_EnemyStartUpDataBase.h"
 

@@ -3,7 +3,6 @@
 
 #include "HackAndSlash/AbilitySystem/Abilities/CombatEnemyGameplayAbility.h"
 #include "HackAndSlash/Characters/CombatEnemyCharacter.h"
-#include "HackAndSlash/Characters/CombatEnemyCharacter.h"
 
 ACombatEnemyCharacter* UCombatEnemyGameplayAbility::GetEnemyCharacterFromActorInfo()
 {
