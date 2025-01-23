@@ -3,6 +3,8 @@
 
 #include "HackAndSlash/AbilitySystem/CombatAttributeSet.h"
 #include "GameplayEffectExtension.h"
+#include "HackAndSlash/CombatFunctionLibrary.h"
+#include "HackAndSlash/CombatGameplayTags.h"
 #include "HackAndSlash/CombatDebugHelper.h"
 
 UCombatAttributeSet::UCombatAttributeSet()
@@ -58,11 +60,10 @@ void UCombatAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffect
 		Debug::Print(HealthDebugString, FColor::Green);
 		
 		//TODO:: Notify the UI
-
-		//TODO:: Handle character death
+		
 		if (NewCurrentHealth == 0.f)
 		{
-			
+			UCombatFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), CombatGameplayTags::Shared_Status_Death);
 		}
 	}
 
@@ -88,7 +89,7 @@ void UCombatAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffect
 
 		if (NewStanceLevel >= GetMaxStanceLevel())
 		{
-			//TODO:: Handle stance break
+			UCombatFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), CombatGameplayTags::Shared_Status_StanceBroken);
 		}
 	}
 }
