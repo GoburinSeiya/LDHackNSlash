@@ -43,10 +43,15 @@ namespace CombatGameplayTags
 
 	/** Enemy tags **/
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Weapon); //tag used to register weapon
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_Melee);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_Ranged);
+	
 
 	/** Shared tags **/
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_MeleeHit);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_SetByCaller_BaseDamage);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_HitReact);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_HitReact);
 	
 	
 }

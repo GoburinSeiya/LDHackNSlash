@@ -24,7 +24,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Combat|Ability")
 	UEnemyCombatComponent* GetEnemyCombatComponentFromActorInfo();
 
-protected:
+private:
 	TWeakObjectPtr<ACombatEnemyCharacter> CachedEnemyCharacter;
 	
 };

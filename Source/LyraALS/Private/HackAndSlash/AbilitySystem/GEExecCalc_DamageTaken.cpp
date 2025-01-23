@@ -12,6 +12,7 @@ struct FCombatDamageCapture
 	DECLARE_ATTRIBUTE_CAPTUREDEF(DefensePower)
 	DECLARE_ATTRIBUTE_CAPTUREDEF(StanceDamage)
 	DECLARE_ATTRIBUTE_CAPTUREDEF(DamageTaken)
+	DECLARE_ATTRIBUTE_CAPTUREDEF(StanceDamageTaken)
 
 	FCombatDamageCapture()
 	{
@@ -19,6 +20,7 @@ struct FCombatDamageCapture
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UCombatAttributeSet, DefensePower, Target, false)
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UCombatAttributeSet, StanceDamage, Source, false)
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UCombatAttributeSet, DamageTaken, Target, false)
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UCombatAttributeSet, StanceDamageTaken, Target, false)
 	}
 };
 
@@ -34,6 +36,7 @@ UGEExecCalc_DamageTaken::UGEExecCalc_DamageTaken()
 	RelevantAttributesToCapture.Add(GetCombatDamageCapture().AttackPowerDef);
 	RelevantAttributesToCapture.Add(GetCombatDamageCapture().DefensePowerDef);
 	RelevantAttributesToCapture.Add(GetCombatDamageCapture().StanceDamageDef);
+	RelevantAttributesToCapture.Add(GetCombatDamageCapture().DamageTakenDef);
 }
 
 void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams,
@@ -60,7 +63,7 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 	float SourceAttackPower = 0.f;
 	//Attempts to calculate										which value we want to get				Tags				Variable to set
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetCombatDamageCapture().AttackPowerDef, EvaluateParams, SourceAttackPower);
-	Debug::Print(TEXT("SourceAttackPower"), SourceAttackPower);
+	// Debug::Print(TEXT("SourceAttackPower"), SourceAttackPower);
 
 	
 	float BaseDamage = 0.f;
@@ -72,29 +75,29 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 		if (TagMagnitude.Key.MatchesTagExact(CombatGameplayTags::Shared_SetByCaller_BaseDamage))
 		{
 			BaseDamage = TagMagnitude.Value;
-			Debug::Print(TEXT("BaseDamage"), BaseDamage);
+			// Debug::Print(TEXT("BaseDamage"), BaseDamage);
 		}
 
 		if (TagMagnitude.Key.MatchesTagExact(CombatGameplayTags::Player_SetByCaller_AttackType_Light))
 		{
 			UsedLightAttackComboCount = TagMagnitude.Value;
-			Debug::Print(TEXT("UsedLightAttackComboCount"), UsedLightAttackComboCount);
+			// Debug::Print(TEXT("UsedLightAttackComboCount"), UsedLightAttackComboCount);
 		}
 
 		if (TagMagnitude.Key.MatchesTagExact(CombatGameplayTags::Player_SetByCaller_AttackType_Heavy))
 		{
 			UsedHeavyAttackComboCount = TagMagnitude.Value;
-			Debug::Print(TEXT("UsedHeavyAttackComboCount"), UsedHeavyAttackComboCount);
+			// Debug::Print(TEXT("UsedHeavyAttackComboCount"), UsedHeavyAttackComboCount);
 		}
 	}
 	
 	float StanceDamage = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetCombatDamageCapture().StanceDamageDef, EvaluateParams, StanceDamage);
-	Debug::Print(TEXT("SourceStanceDamage"), StanceDamage);
+	// Debug::Print(TEXT("SourceStanceDamage"), StanceDamage);
 	
 	float TargetDefensePower = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetCombatDamageCapture().DefensePowerDef, EvaluateParams, TargetDefensePower);
-	Debug::Print(TEXT("TargetDefensePower"), TargetDefensePower);
+	// Debug::Print(TEXT("TargetDefensePower"), TargetDefensePower);
 
 	if (UsedLightAttackComboCount != 0)
 	{
@@ -102,7 +105,7 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 		const float DamageIncreasePercentLight = (UsedLightAttackComboCount - 1) * 0.05 + 1.f;
 
 		BaseDamage *= DamageIncreasePercentLight;
-		Debug::Print(TEXT("ScaledBaseDamageLA"), BaseDamage);
+		// Debug::Print(TEXT("ScaledBaseDamageLA"), BaseDamage);
 	}
 
 	if (UsedHeavyAttackComboCount != 0)
@@ -111,7 +114,7 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 		const float DamageIncreasePercentHeavy = UsedHeavyAttackComboCount * 0.15f + 1.f;
 
 		BaseDamage *= DamageIncreasePercentHeavy;
-		Debug::Print(TEXT("ScaledBaseDamageHeavy"), BaseDamage);
+		// Debug::Print(TEXT("ScaledBaseDamageHeavy"), BaseDamage);
 	}
 
 	const float FinalDamageDone = BaseDamage * SourceAttackPower / TargetDefensePower;
@@ -128,5 +131,16 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 				FinalDamageDone
 			)
 		);
+	}
+
+	if (FinalStanceDamageDone > 0.f)
+	{
+		OutExecutionOutput.AddOutputModifier(
+			FGameplayModifierEvaluatedData(
+				GetCombatDamageCapture().StanceDamageTakenProperty,
+				EGameplayModOp::Override,
+				FinalStanceDamageDone
+				)
+			);
 	}
 }

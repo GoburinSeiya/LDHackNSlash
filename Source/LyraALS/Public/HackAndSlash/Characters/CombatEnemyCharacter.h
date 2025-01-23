@@ -32,11 +32,13 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
 	UEnemyCombatComponent* EnemyCombatComponent;
 
+public:
+	//Getter func
+	FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const {return EnemyCombatComponent;}
+	
 private:
 	void InitEnemyStartUpData();
 	
-public:
-	//Getter func
-	FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const {return  EnemyCombatComponent;}
+
 	
 };
