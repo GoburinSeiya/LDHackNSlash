@@ -10,8 +10,8 @@
 #include "HackAndSlash/DataAssets/StartupData/DataAsset_HeroStartUpData.h"
 #include "HackAndSlash/Components/Combat/HeroCombatComponent.h"
 #include "HackAndSlash/Components/Input/CombatInputComponent.h"
-
 #include "HackAndSlash/CombatDebugHelper.h"
+#include "HackAndSlash/Components/UI/PlayerUIComponent.h"
 
 struct FInputActionValue;
 
@@ -19,11 +19,23 @@ struct FInputActionValue;
 ACombatHeroCharacter::ACombatHeroCharacter()
 {
 	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
+
+	PlayerUIComponent = CreateDefaultSubobject<UPlayerUIComponent>(TEXT("PlayerUIComponent"));
 }
 
 UPawnCombatComponent* ACombatHeroCharacter::GetPawnCombatComponent() const
 {
 	return HeroCombatComponent;
+}
+
+UPawnUIComponent* ACombatHeroCharacter::GetPawnUIComponent() const
+{
+	return PlayerUIComponent;
+}
+
+UPlayerUIComponent* ACombatHeroCharacter::GetPlayerUIComponent() const
+{
+	return PlayerUIComponent;
 }
 
 void ACombatHeroCharacter::PossessedBy(AController* NewController)

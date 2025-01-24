@@ -9,6 +9,7 @@
 
 class UDataAsset_InputConfig;
 class UHeroCombatComponent; //forward declare component
+class UPlayerUIComponent;
 
 /**
  * 
@@ -24,6 +25,11 @@ public:
 	//~ Begin IPawnCombatComponent Interface.
 	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
 	//~ End IPawnCombatComponent Interface.
+
+	//~ Begin ICombatUIInterface Interface.
+	virtual UPawnUIComponent* GetPawnUIComponent() const override;
+	virtual UPlayerUIComponent* GetPlayerUIComponent() const override;
+	//~ End ICombatUIInterface Interface.
 	
 protected:
 	//~ Begin APawn Interface.
@@ -35,7 +41,11 @@ protected:
 private:
 #pragma region Components
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
-	UHeroCombatComponent* HeroCombatComponent; 
+	UHeroCombatComponent* HeroCombatComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI", meta = (AllowPrivateAccess = "true"))
+	UPlayerUIComponent* PlayerUIComponent;
+	
 #pragma endregion Components
 	
 #pragma region Inputs

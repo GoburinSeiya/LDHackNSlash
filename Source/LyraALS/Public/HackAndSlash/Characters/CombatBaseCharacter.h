@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
 #include "HackAndSlash/Interfaces/PawnCombatInterface.h"
+#include "HackAndSlash/Interfaces/CombatUIInterface.h"
 #include "CombatBaseCharacter.generated.h"
 
 
@@ -13,7 +14,7 @@ class UCombatAbilitySystemComponent;
 class UCombatAttributeSet;
 class UDataAsset_StartUpDataBase;
 UCLASS()
-class LYRAALS_API ACombatBaseCharacter : public ACharacter, public IAbilitySystemInterface, public IPawnCombatInterface
+class LYRAALS_API ACombatBaseCharacter : public ACharacter, public IAbilitySystemInterface, public IPawnCombatInterface, public ICombatUIInterface
 {
 	GENERATED_BODY()
 
@@ -28,6 +29,10 @@ public:
 	//~ Begin IPawnCombatComponent Interface.
 	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
 	//~ End IPawnCombatComponent Interface.
+
+	//~ Begin ICombatUIInterface Interface.
+	virtual UPawnUIComponent* GetPawnUIComponent() const override;
+	//~ End ICombatUIInterface Interface.
 	
 protected:
 	//~ Begin APawn Interface.

@@ -31,6 +31,11 @@ UPawnCombatComponent* ACombatBaseCharacter::GetPawnCombatComponent() const
 	return nullptr;
 }
 
+UPawnUIComponent* ACombatBaseCharacter::GetPawnUIComponent() const
+{
+	return nullptr;
+}
+
 void ACombatBaseCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);

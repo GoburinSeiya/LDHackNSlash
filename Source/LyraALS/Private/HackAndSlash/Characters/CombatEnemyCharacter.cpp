@@ -7,8 +7,8 @@
 #include "HackAndSlash/Components/Combat/EnemyCombatComponent.h"
 #include "Engine/AssetManager.h"
 #include "HackAndSlash/DataAssets/StartupData/DataAsset_EnemyStartUpDataBase.h"
-
 #include "HackAndSlash/CombatDebugHelper.h"
+#include "HackAndSlash/Components/UI/NPCUIComponent.h"
 
 
 ACombatEnemyCharacter::ACombatEnemyCharacter()
@@ -30,12 +30,24 @@ ACombatEnemyCharacter::ACombatEnemyCharacter()
 	//Construct our componets
 	//												name
 	EnemyCombatComponent = CreateDefaultSubobject<UEnemyCombatComponent>("EnemyCombatComponent");
+
+	NPC_UIComponent = CreateDefaultSubobject<UNPCUIComponent>("NPC_UIComponent");
 	
 }
 
 UPawnCombatComponent* ACombatEnemyCharacter::GetPawnCombatComponent() const
 {
 	return EnemyCombatComponent;
+}
+
+UPawnUIComponent* ACombatEnemyCharacter::GetPawnUIComponent() const
+{
+	return NPC_UIComponent;
+}
+
+UNPCUIComponent* ACombatEnemyCharacter::GetNPC_UIComponent() const
+{
+	return NPC_UIComponent;
 }
 
 void ACombatEnemyCharacter::PossessedBy(AController* NewController)

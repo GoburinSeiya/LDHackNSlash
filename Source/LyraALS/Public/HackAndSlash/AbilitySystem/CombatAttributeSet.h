@@ -14,6 +14,8 @@ GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
 GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+class ICombatUIInterface;
+
 /**
  * 
  */
@@ -75,4 +77,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category="Damage")
 	FGameplayAttributeData StanceDamageTaken;
 	ATTRIBUTE_ACCESSORS(UCombatAttributeSet, StanceDamageTaken)
+
+private:
+	TWeakInterfacePtr<ICombatUIInterface> CachedCombatUIInterface;
 };

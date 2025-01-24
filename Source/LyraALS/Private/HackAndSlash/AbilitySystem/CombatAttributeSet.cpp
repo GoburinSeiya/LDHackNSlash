@@ -6,6 +6,9 @@
 #include "HackAndSlash/CombatFunctionLibrary.h"
 #include "HackAndSlash/CombatGameplayTags.h"
 #include "HackAndSlash/CombatDebugHelper.h"
+#include "HackAndSlash/Interfaces/CombatUIInterface.h"
+#include "HackAndSlash/Components/UI/PawnUIComponent.h"
+#include "HackAndSlash/Components/UI/PlayerUIComponent.h"
 
 UCombatAttributeSet::UCombatAttributeSet()
 {
@@ -29,16 +32,43 @@ UCombatAttributeSet::UCombatAttributeSet()
 
 void UCombatAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data)
 {
+	// //Get a hold of our UI interface
+	// ICombatUIInterface* PawnUI_Interface = Cast<ICombatUIInterface>(Data.Target.GetAvatarActor());
+
+	if (!CachedCombatUIInterface.IsValid())
+		CachedCombatUIInterface = TWeakInterfacePtr<ICombatUIInterface>(Data.Target.GetAvatarActor());
+
+	checkf(CachedCombatUIInterface.IsValid(), TEXT("%s did not implement UI interface"), *Data.Target.GetAvatarActor()->GetActorNameOrLabel());
+
+	UPawnUIComponent* PawnUIComponent = CachedCombatUIInterface->GetPawnUIComponent();
+
+	checkf(PawnUIComponent, TEXT("Couldn't extract a PawnUIComponent from %s"), *Data.Target.GetAvatarActor()->GetActorNameOrLabel());
+
+	// These checks are to clamp the values of our attributes to 0 or their max value so we dont get funny behaviour
+	// this ifs only fire if the attribute is the one being evaluated this frame, this is why every evaluated value
+	// should be locked in this checks
 	if (Data.EvaluatedData.Attribute == GetCurrentHealthAttribute())
 	{
 		const float NewCurrentHealth = FMath::Clamp(GetCurrentHealth(), 0.f, GetMaxHealth());
 		SetCurrentHealth(NewCurrentHealth);
+		PawnUIComponent->OnCurrentHealthChanged.Broadcast(GetCurrentHealth()/GetMaxHealth());
 	}
 
 	if (Data.EvaluatedData.Attribute == GetCurrentCinderChargeAttribute())
 	{
 		const float NewCurrentCinderCharge = FMath::Clamp(GetCurrentCinderCharge(), 0.f, GetMaxCinderCharge());
-		SetCurrentCinderCharge(NewCurrentCinderCharge); 
+		SetCurrentCinderCharge(NewCurrentCinderCharge);
+		if (UPlayerUIComponent* PlayerUIComponent = CachedCombatUIInterface->GetPlayerUIComponent())
+		{
+			PlayerUIComponent->OnCurrentCindersChanged.Broadcast(GetCurrentCinderCharge()/GetMaxCinderCharge());
+		}
+	}
+
+	if (Data.EvaluatedData.Attribute == GetMaxStanceLevelAttribute())
+	{
+		const float NewCurrentStanceLevel = FMath::Clamp(GetCurrentStanceLevel(), 0.f, GetMaxStanceLevel());
+		SetCurrentStanceLevel(NewCurrentStanceLevel);
+		PawnUIComponent->OnStanceLevelChanged.Broadcast(GetCurrentStanceLevel()/GetMaxStanceLevel());
 	}
 
 	if (Data.EvaluatedData.Attribute == GetDamageTakenAttribute())
@@ -58,10 +88,10 @@ void UCombatAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffect
 		 );
 
 		Debug::Print(HealthDebugString, FColor::Green);
+
+		PawnUIComponent->OnCurrentHealthChanged.Broadcast(GetCurrentHealth()/GetMaxHealth());
 		
-		//TODO:: Notify the UI
-		
-		if (NewCurrentHealth == 0.f)
+		if (GetCurrentHealth() == 0.f)
 		{
 			UCombatFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), CombatGameplayTags::Shared_Status_Death);
 		}
@@ -85,9 +115,9 @@ void UCombatAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffect
 
 		Debug::Print(StanceDebugString, FColor::Yellow);
 
-		//TODO:: Notify the UI
-
-		if (NewStanceLevel >= GetMaxStanceLevel())
+		PawnUIComponent->OnStanceLevelChanged.Broadcast(GetCurrentStanceLevel()/GetMaxStanceLevel());
+		
+		if (GetCurrentStanceLevel() >= GetMaxStanceLevel())
 		{
 			UCombatFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), CombatGameplayTags::Shared_Status_StanceBroken);
 		}

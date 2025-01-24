@@ -7,6 +7,7 @@
 #include "CombatEnemyCharacter.generated.h"
 
 class UEnemyCombatComponent;
+class UNPCUIComponent;
 
 
 /**
@@ -24,13 +25,22 @@ public:
 	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
 	//~ End IPawnCombatComponent Interface.
 
+	//~ Begin ICombatUIInterface Interface.
+	virtual UPawnUIComponent* GetPawnUIComponent() const override;
+	virtual UNPCUIComponent* GetNPC_UIComponent() const override;
+	//~ End ICombatUIInterface Interface.
+
 protected:
 	//~ Begin APawn Interface.
 	virtual void PossessedBy(AController* NewController) override;
 	//~ End APawn Interface
+	
 	//We declare our combat component, dont forget to construct it in construction script
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
 	UEnemyCombatComponent* EnemyCombatComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
+	UNPCUIComponent* NPC_UIComponent;
 
 public:
 	//Getter func
