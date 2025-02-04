@@ -6,6 +6,8 @@
 #include "HackAndSlash/Components/UI/PawnUIComponent.h"
 #include "PlayerUIComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEquippedWeaponChangedDelegate, TSoftObjectPtr<UTexture2D>, SoftWeaponIcon);
+
 /**
  * 
  */
@@ -17,4 +19,8 @@ class LYRAALS_API UPlayerUIComponent : public UPawnUIComponent
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnPercentChangedDelegate OnCurrentCindersChanged;
+
+	//we need access to the bp so we create it as callable
+	UPROPERTY(BlueprintCallable, BlueprintAssignable)
+	FOnEquippedWeaponChangedDelegate OnEquippedWeaponChanged;
 };

@@ -8,6 +8,7 @@
 
 class UEnemyCombatComponent;
 class UNPCUIComponent;
+class UWidgetComponent;
 
 
 /**
@@ -31,6 +32,8 @@ public:
 	//~ End ICombatUIInterface Interface.
 
 protected:
+	virtual void BeginPlay() override;
+	
 	//~ Begin APawn Interface.
 	virtual void PossessedBy(AController* NewController) override;
 	//~ End APawn Interface
@@ -42,13 +45,13 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
 	UNPCUIComponent* NPC_UIComponent;
 
-public:
-	//Getter func
-	FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const {return EnemyCombatComponent;}
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
+	UWidgetComponent* NPC_CombatWidgetComponent;
 	
 private:
 	void InitEnemyStartUpData();
 	
-
-	
+public:
+	//Getter func
+	FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const {return EnemyCombatComponent;}
 };

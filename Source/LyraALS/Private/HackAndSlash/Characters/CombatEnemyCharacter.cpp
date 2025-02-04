@@ -2,6 +2,7 @@
 
 
 #include "HackAndSlash/Characters/CombatEnemyCharacter.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HackAndSlash/AbilitySystem/Abilities/CombatEnemyGameplayAbility.h"
 #include "HackAndSlash/Components/Combat/EnemyCombatComponent.h"
@@ -9,6 +10,8 @@
 #include "HackAndSlash/DataAssets/StartupData/DataAsset_EnemyStartUpDataBase.h"
 #include "HackAndSlash/CombatDebugHelper.h"
 #include "HackAndSlash/Components/UI/NPCUIComponent.h"
+#include "Components/WidgetComponent.h"
+#include "HackAndSlash/Widgets/GameWidgetBase.h"
 
 
 ACombatEnemyCharacter::ACombatEnemyCharacter()
@@ -32,6 +35,9 @@ ACombatEnemyCharacter::ACombatEnemyCharacter()
 	EnemyCombatComponent = CreateDefaultSubobject<UEnemyCombatComponent>("EnemyCombatComponent");
 
 	NPC_UIComponent = CreateDefaultSubobject<UNPCUIComponent>("NPC_UIComponent");
+
+	NPC_CombatWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("NPC_CombatWidgetComponent");
+	NPC_CombatWidgetComponent->SetupAttachment(GetMesh());
 	
 }
 
@@ -48,6 +54,16 @@ UPawnUIComponent* ACombatEnemyCharacter::GetPawnUIComponent() const
 UNPCUIComponent* ACombatEnemyCharacter::GetNPC_UIComponent() const
 {
 	return NPC_UIComponent;
+}
+
+void ACombatEnemyCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if ( UGameWidgetBase* CombatWidget = Cast<UGameWidgetBase>(NPC_CombatWidgetComponent->GetUserWidgetObject() ) )
+	{
+		CombatWidget->InitEnemyCreatedWidget(this);
+	} 
 }
 
 void ACombatEnemyCharacter::PossessedBy(AController* NewController)

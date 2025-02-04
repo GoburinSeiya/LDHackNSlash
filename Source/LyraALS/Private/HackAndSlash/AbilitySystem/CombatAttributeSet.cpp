@@ -64,11 +64,14 @@ void UCombatAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffect
 		}
 	}
 
-	if (Data.EvaluatedData.Attribute == GetMaxStanceLevelAttribute())
+	if (Data.EvaluatedData.Attribute == GetCurrentStanceLevelAttribute())
 	{
 		const float NewCurrentStanceLevel = FMath::Clamp(GetCurrentStanceLevel(), 0.f, GetMaxStanceLevel());
 		SetCurrentStanceLevel(NewCurrentStanceLevel);
-		PawnUIComponent->OnStanceLevelChanged.Broadcast(GetCurrentStanceLevel()/GetMaxStanceLevel());
+		if (UPlayerUIComponent* PlayerUIComponent = CachedCombatUIInterface->GetPlayerUIComponent())
+		{
+			PawnUIComponent->OnStanceLevelChanged.Broadcast(GetCurrentStanceLevel()/GetMaxStanceLevel());
+		}
 	}
 
 	if (Data.EvaluatedData.Attribute == GetDamageTakenAttribute())
@@ -87,7 +90,7 @@ void UCombatAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffect
 			NewCurrentHealth
 		 );
 
-		Debug::Print(HealthDebugString, FColor::Green);
+		// Debug::Print(HealthDebugString, FColor::Green);
 
 		PawnUIComponent->OnCurrentHealthChanged.Broadcast(GetCurrentHealth()/GetMaxHealth());
 		
@@ -113,7 +116,7 @@ void UCombatAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffect
 			NewStanceLevel
 		);
 
-		Debug::Print(StanceDebugString, FColor::Yellow);
+		// Debug::Print(StanceDebugString, FColor::Yellow);
 
 		PawnUIComponent->OnStanceLevelChanged.Broadcast(GetCurrentStanceLevel()/GetMaxStanceLevel());
 		

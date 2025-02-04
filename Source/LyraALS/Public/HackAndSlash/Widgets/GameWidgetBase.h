@@ -23,7 +23,7 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent, meta=(DisplayName="OnOwningPlayerUIComponentInit"))
 	void BP_OnOwningPlayerUIComponentInit(UPlayerUIComponent* OwningHeroUIComponent);
 
-	UFUNCTION(BlueprintImplementableEvent, meta=(DisplayName="OnOwningNPC_UIComponent"))
+	UFUNCTION(BlueprintImplementableEvent, meta=(DisplayName="OnOwningNPC_UIComponentInit"))
 	void BP_OnOwningNPCUIComponentInit(UNPCUIComponent* OwningNPC_UIComponent);
 
 public:
