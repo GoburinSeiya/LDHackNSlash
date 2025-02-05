@@ -3,3 +3,12 @@
 
 #include "HackAndSlash/Controllers/CombatHeroController.h"
 
+ACombatHeroController::ACombatHeroController()
+{
+	FriendlyTeamId = FGenericTeamId(0);
+}
+
+FGenericTeamId ACombatHeroController::GetGenericTeamId() const
+{
+	return FriendlyTeamId;
+}

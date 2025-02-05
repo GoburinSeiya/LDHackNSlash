@@ -15,7 +15,7 @@ public class LyraALS : ModuleRules
 			"InputCore",
 			"GameplayTags",
 			"EnhancedInput",
-			"GameplayTasks"
+			"GameplayTasks", "AIModule"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
