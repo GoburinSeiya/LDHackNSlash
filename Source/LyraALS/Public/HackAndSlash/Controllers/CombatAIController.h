@@ -20,12 +20,14 @@ class LYRAALS_API ACombatAIController : public AAIController
 
 public:
 	ACombatAIController(const FObjectInitializer& ObjectInitializer);
-
+	
 	//~ Begin IGenericTeamAgentInterface Interface.
 	virtual ETeamAttitude::Type GetTeamAttitudeTowards(const AActor& Other) const override;
 	//~ End IGenericTeamAgentInterface Interface
 
 protected:
+	virtual void BeginPlay() override;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UAIPerceptionComponent* NPCPerceptionComponent;
 
@@ -37,5 +39,16 @@ protected:
 
 	UFUNCTION()
 	virtual void OnEnemyPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus); //perception update delegate
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category="Detour Crowd Avoidance Config")
+	bool bEnableDetourCrowdAvoidance = true;
+
+	//make it so that this variable can only be adjusted when bEnableCrowd... is true										this second meta specifier makes it a slider nice
+	UPROPERTY(EditDefaultsOnly, Category="Detour Crowd Avoidance Config", meta=(EditCondition="bEnableDetourCrowdAvoidance", UIMin = "1", UIMax = "4")) 
+	int32 DetourCrowdAvoidanceQuality = 4;
+
+	UPROPERTY(EditDefaultsOnly, Category="Detour Crowd Avoidance Config", meta=(EditCondition="bEnableDetourCrowdAvoidance"))
+	float CollisionQueryRange = 600.f;
 	
 };
