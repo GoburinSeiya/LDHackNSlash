@@ -44,7 +44,7 @@ ETeamAttitude::Type ACombatAIController::GetTeamAttitudeTowards(const AActor& Ot
 	const IGenericTeamAgentInterface* OtherTeamAgent =  Cast<const IGenericTeamAgentInterface>(PawnToCheck->GetController());
 
 	/** We check if the other team agent ID is not equal to this AI team ID */
-	if (OtherTeamAgent && OtherTeamAgent->GetGenericTeamId() != GetGenericTeamId())
+	if (OtherTeamAgent && OtherTeamAgent->GetGenericTeamId() < GetGenericTeamId())
 	{
 		//This means the pawn is an enemy
 		return ETeamAttitude::Hostile;
@@ -92,13 +92,14 @@ void ACombatAIController::BeginPlay()
 
 void ACombatAIController::OnEnemyPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	if (Stimulus.WasSuccessfullySensed() && Actor)
+	if (UBlackboardComponent* BlackboardComponent = GetBlackboardComponent())
 	{
-		// Debug::Print(Actor->GetActorNameOrLabel() + TEXT(" was sensed"), FColor::Blue);
-		if (UBlackboardComponent* BlackboardComponent = GetBlackboardComponent())
+		if (!BlackboardComponent->GetValueAsObject(FName("TargetActor")))
 		{
-			//Set a bb value							key name must be identical, then value
-			BlackboardComponent->SetValueAsObject(FName("TargetActor"), Actor);
+			if (Stimulus.WasSuccessfullySensed() && Actor)
+			{
+				BlackboardComponent->SetValueAsObject(FName("TargetActor"), Actor);
+			}
 		}
 	}
 }

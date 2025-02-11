@@ -64,6 +64,7 @@ namespace CombatGameplayTags
 	/** Shared status tags **/
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_Death); //this is the tag we should add when HP reaches 0
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_StanceBroken); //this is the tag we should add when Stance reaches it's limit
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_Strafing);
 	
 	
 }

@@ -61,7 +61,7 @@ namespace CombatGameplayTags
 	/** Shared status tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_Death, "Shared.Status.Death");//this is the tag we should add when HP reaches 0
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_StanceBroken, "Shared.Status.StanceBroken"); //this is the tag we should add when Stance reaches it's limit
-	
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_Strafing, "Shared.Status.Strafing");
 	 
 	
 }
