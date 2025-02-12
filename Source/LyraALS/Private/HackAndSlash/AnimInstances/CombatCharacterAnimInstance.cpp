@@ -4,6 +4,7 @@
 #include "HackAndSlash/AnimInstances/CombatCharacterAnimInstance.h"
 #include "HackAndSlash/Characters/CombatBaseCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "KismetAnimationLibrary.h"
 
 void UCombatCharacterAnimInstance::NativeInitializeAnimation()
 {
@@ -23,4 +24,8 @@ void UCombatCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSe
 	}
 
 	GroundSpeed = OwningCharacter->GetVelocity().Size2D();
+
+	//CalculateStrafingDirection
+	LocomotionDirection = UKismetAnimationLibrary::CalculateDirection(OwningCharacter->GetVelocity(), OwningCharacter->GetActorRotation());
 }
+

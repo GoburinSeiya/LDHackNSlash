@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "GameplayTagContainer.h"
 #include "CombatBaseAnimInstance.generated.h"
 
 /**
@@ -13,5 +14,8 @@ UCLASS()
 class LYRAALS_API UCombatBaseAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
-	
+
+protected:
+	UFUNCTION(BlueprintPure, meta = (BlueprintThreadSafe))
+	bool DoesOwnerHaveTag(FGameplayTag TagToCheck) const; 
 };
