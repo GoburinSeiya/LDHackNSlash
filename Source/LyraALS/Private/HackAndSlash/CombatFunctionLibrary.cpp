@@ -6,6 +6,7 @@
 #include "HackAndSlash/AbilitySystem/CombatAbilitySystemComponent.h"  
 #include "HackAndSlash/Components/Combat/PawnCombatComponent.h"
 #include "HackAndSlash/Interfaces/PawnCombatInterface.h"
+#include "GenericTeamAgentInterface.h"
 
 UCombatAbilitySystemComponent* UCombatFunctionLibrary::NativeGetCombatASCFromActor(AActor* InActor)
 {
@@ -72,4 +73,21 @@ UPawnCombatComponent* UCombatFunctionLibrary::BP_GetPawnCombatComponentFromActor
 	OutValidType = CombatComponent? ECombatValidType::Valid : ECombatValidType::Invalid;
 
 	return CombatComponent;
+}
+
+bool UCombatFunctionLibrary::IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetPawn)
+{
+	check(QueryPawn);
+	check(TargetPawn);
+	
+	//We use the generic team agent interface to check if a pawn is hostile, include header file
+	IGenericTeamAgentInterface* QueryTeamAgent = Cast<IGenericTeamAgentInterface>(QueryPawn->GetController());
+	IGenericTeamAgentInterface* TargetTeamAgent = Cast<IGenericTeamAgentInterface>(TargetPawn->GetController());
+
+	if (QueryTeamAgent && TargetTeamAgent)
+	{
+		return QueryTeamAgent->GetGenericTeamId() != TargetTeamAgent->GetGenericTeamId();
+	}
+
+	return false;
 }

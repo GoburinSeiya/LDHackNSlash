@@ -2,7 +2,8 @@
 
 
 #include "HackAndSlash/AbilitySystem/CombatAbilitySystemComponent.h"  
-#include "HackAndSlash/AbilitySystem/Abilities/CombatGameplayAbility.h"  
+#include "HackAndSlash/AbilitySystem/Abilities/CombatGameplayAbility.h"
+#include "HackAndSlash/AbilitySystem/Abilities/CombatHeroGameplayAbility.h"
 
   
 void UCombatAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InInputTag)  
@@ -68,4 +69,29 @@ void UCombatAbilitySystemComponent::RemoveGrantedHeroWeaponAbilities(
 	}
 
 	InSpecHandlesToRemove.Empty();
+}
+
+bool UCombatAbilitySystemComponent::TryActivateAbilityByTag(FGameplayTag AbilityTagToActivate)
+{
+	check(AbilityTagToActivate.IsValid());
+	
+	TArray<FGameplayAbilitySpec*> FoundAbilitySpecs;
+	
+	//We get the ability to activate by tag				Convert the ability tag to a container with func	Array of ability specs
+	GetActivatableGameplayAbilitySpecsByAllMatchingTags(AbilityTagToActivate.GetSingleTagContainer(), FoundAbilitySpecs);
+
+	if (!FoundAbilitySpecs.IsEmpty())
+	{
+		const int32 RandomAbilityIndex = FMath::RandRange(0, FoundAbilitySpecs.Num() - 1);
+		FGameplayAbilitySpec* SpecToActivate = FoundAbilitySpecs[RandomAbilityIndex];
+
+		check(SpecToActivate);
+
+		if(!SpecToActivate->IsActive())
+		{
+			return TryActivateAbility(SpecToActivate->Handle);
+		}
+	}
+
+	return false;
 }  
