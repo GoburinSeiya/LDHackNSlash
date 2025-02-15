@@ -33,7 +33,8 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Combat|Ability")
 	FGameplayEffectSpecHandle MakeHeroDamageSpecHandle ( TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag,
-		int32 InCurrentComboCount);
+		int32 InCurrentComboCount, float InWeaponStanceDamage);
+	
 	
 private:
 	//We make a member variable to store our Avatar actor info cast from the Getter function

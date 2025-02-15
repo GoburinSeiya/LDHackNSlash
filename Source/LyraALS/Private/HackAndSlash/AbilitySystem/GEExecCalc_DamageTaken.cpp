@@ -37,6 +37,7 @@ UGEExecCalc_DamageTaken::UGEExecCalc_DamageTaken()
 	RelevantAttributesToCapture.Add(GetCombatDamageCapture().DefensePowerDef);
 	RelevantAttributesToCapture.Add(GetCombatDamageCapture().StanceDamageDef);
 	RelevantAttributesToCapture.Add(GetCombatDamageCapture().DamageTakenDef);
+	RelevantAttributesToCapture.Add(GetCombatDamageCapture().StanceDamageTakenDef);
 }
 
 void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams,
@@ -67,6 +68,7 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 
 	
 	float BaseDamage = 0.f;
+	float SourceStanceDamage = 0.f;
 	int32 UsedLightAttackComboCount = 0;
 	int32 UsedHeavyAttackComboCount = 0;
 	//We call the tmap where we place our elements inside the helper function
@@ -76,6 +78,12 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 		{
 			BaseDamage = TagMagnitude.Value;
 			// Debug::Print(TEXT("BaseDamage"), BaseDamage);
+		}
+
+		if (TagMagnitude.Key.MatchesTagExact(CombatGameplayTags::Shared_SetByCaller_StanceDamage))
+		{
+			SourceStanceDamage = TagMagnitude.Value;
+			// Debug::Print(TEXT("SourceStageDamage: "), SourceStanceDamage);
 		}
 
 		if (TagMagnitude.Key.MatchesTagExact(CombatGameplayTags::Player_SetByCaller_AttackType_Light))
@@ -90,10 +98,6 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 			// Debug::Print(TEXT("UsedHeavyAttackComboCount"), UsedHeavyAttackComboCount);
 		}
 	}
-	
-	float StanceDamage = 0.f;
-	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetCombatDamageCapture().StanceDamageDef, EvaluateParams, StanceDamage);
-	// Debug::Print(TEXT("SourceStanceDamage"), StanceDamage);
 	
 	float TargetDefensePower = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetCombatDamageCapture().DefensePowerDef, EvaluateParams, TargetDefensePower);
@@ -119,7 +123,7 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 
 	const float FinalDamageDone = BaseDamage * SourceAttackPower / TargetDefensePower;
 	// Debug::Print(TEXT("FinalDamage"), FinalDamageDone);
-	const float FinalStanceDamageDone = BaseDamage * StanceDamage / TargetDefensePower;
+	const float FinalStanceDamageDone = BaseDamage * SourceStanceDamage / TargetDefensePower;
 	// Debug::Print(TEXT("FinalStanceDamage"), FinalStanceDamageDone);
 
 	if (FinalDamageDone > 0.f)

@@ -35,7 +35,7 @@ UHeroCombatComponent* UCombatHeroGameplayAbility::GetHeroCombatComponentFromActo
 }
 
 FGameplayEffectSpecHandle UCombatHeroGameplayAbility::MakeHeroDamageSpecHandle(TSubclassOf<UGameplayEffect> EffectClass,
-	float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InCurrentComboCount)
+	float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InCurrentComboCount, float InWeaponStanceDamage)
 {
 	check(EffectClass);
 
@@ -53,6 +53,7 @@ FGameplayEffectSpecHandle UCombatHeroGameplayAbility::MakeHeroDamageSpecHandle(T
 
 	//Store inside our handle data our weapons base damage
 	EffectSpecHandle.Data->SetSetByCallerMagnitude(CombatGameplayTags::Shared_SetByCaller_BaseDamage, InWeaponBaseDamage);
+	EffectSpecHandle.Data->SetSetByCallerMagnitude(CombatGameplayTags::Shared_SetByCaller_StanceDamage, InWeaponStanceDamage);
 
 	if(InCurrentAttackTypeTag.IsValid())
 	{
@@ -62,3 +63,5 @@ FGameplayEffectSpecHandle UCombatHeroGameplayAbility::MakeHeroDamageSpecHandle(T
 	
 	return EffectSpecHandle;
 }
+
+

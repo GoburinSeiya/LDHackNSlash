@@ -23,6 +23,11 @@ float UHeroCombatComponent::GetHeroCurrentEquippedDamageAtLevel(float InLevel) c
 	return GetHeroCurrentEquippedWeapon()->HeroWeaponData.WeaponBaseDamage.GetValueAtLevel(InLevel);
 }
 
+float UHeroCombatComponent::GetHeroCurrentEquippedWeaponStanceDamageAtLevel(float InLevel) const
+{
+	return GetHeroCurrentEquippedWeapon()->HeroWeaponData.WeaponStanceDamage.GetValueAtLevel(InLevel);
+}
+
 void UHeroCombatComponent::OnHitTargetActor(AActor* HitActor)
 {
 	if(OverlappedActors.Contains(HitActor))

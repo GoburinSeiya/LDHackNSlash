@@ -27,6 +27,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	float GetHeroCurrentEquippedDamageAtLevel(float InLevel) const;
 
+	UFUNCTION(BlueprintCallable, Category = "Combat")
+	float GetHeroCurrentEquippedWeaponStanceDamageAtLevel(float InLevel) const;
+
 	virtual void OnHitTargetActor(AActor* HitActor) override;
 	virtual void OnWeaponPulledFromTargetActor(AActor* InteractedActor) override;
 	

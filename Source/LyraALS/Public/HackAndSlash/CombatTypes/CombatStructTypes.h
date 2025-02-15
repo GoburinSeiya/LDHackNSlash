@@ -47,6 +47,9 @@ struct FCombatHeroWeaponData
 	FScalableFloat WeaponBaseDamage;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FScalableFloat WeaponStanceDamage;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSoftObjectPtr<UTexture2D> SoftWeaponIconTexture;
 };
 

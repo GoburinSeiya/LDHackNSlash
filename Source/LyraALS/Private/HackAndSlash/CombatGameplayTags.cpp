@@ -55,6 +55,7 @@ namespace CombatGameplayTags
 
 	/** Shared set by caller tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Shared_SetByCaller_BaseDamage, "Shared.SetByCaller.BaseDamage");
+	UE_DEFINE_GAMEPLAY_TAG(Shared_SetByCaller_StanceDamage, "Shared.SetByCaller.StanceDamage");
 
 	/** Shared ability tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact, "Shared.Ability.HitReact");
