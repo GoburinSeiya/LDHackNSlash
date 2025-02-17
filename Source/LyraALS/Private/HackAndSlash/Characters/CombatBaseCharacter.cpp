@@ -2,8 +2,9 @@
 
 
 #include "HackAndSlash/Characters/CombatBaseCharacter.h"
-	#include "HackAndSlash/AbilitySystem/CombatAbilitySystemComponent.h" //include our ability system component
+#include "HackAndSlash/AbilitySystem/CombatAbilitySystemComponent.h" //include our ability system component
 #include "HackAndSlash/AbilitySystem/CombatAttributeSet.h" //Include our attribute set
+#include "MotionWarpingComponent.h"
 
 // Sets default values
 ACombatBaseCharacter::ACombatBaseCharacter()
@@ -19,6 +20,8 @@ ACombatBaseCharacter::ACombatBaseCharacter()
 	CombatAbilitySystemComponent = CreateDefaultSubobject<UCombatAbilitySystemComponent>(TEXT("CombatAbilitySystemComponent"));
 
 	CombatAttributeSet = CreateDefaultSubobject<UCombatAttributeSet>(TEXT("CombatAttributeSet"));
+
+	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpingComponent"));
 }
 
 UAbilitySystemComponent* ACombatBaseCharacter::GetAbilitySystemComponent() const

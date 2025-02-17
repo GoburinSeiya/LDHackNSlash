@@ -13,6 +13,8 @@
 class UCombatAbilitySystemComponent;
 class UCombatAttributeSet;
 class UDataAsset_StartUpDataBase;
+class UMotionWarpingComponent;
+
 UCLASS()
 class LYRAALS_API ACombatBaseCharacter : public ACharacter, public IAbilitySystemInterface, public IPawnCombatInterface, public ICombatUIInterface
 {
@@ -44,6 +46,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
 	UCombatAttributeSet* CombatAttributeSet;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "MotionWarping")
+	UMotionWarpingComponent* MotionWarpingComponent; 
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CharacterData")
 	TSoftObjectPtr<UDataAsset_StartUpDataBase> CharacterStartUpDataBase;

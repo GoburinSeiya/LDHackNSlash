@@ -17,7 +17,8 @@ public class LyraALS : ModuleRules
 			"EnhancedInput",
 			"GameplayTasks", 
 			"AIModule",
-			"AnimGraphRuntime"
+			"AnimGraphRuntime",
+			"MotionWarping"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
