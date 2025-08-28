@@ -4,6 +4,7 @@
 #include "HackAndSlash/AbilitySystem/CombatAbilitySystemComponent.h"  
 #include "HackAndSlash/AbilitySystem/Abilities/CombatGameplayAbility.h"
 #include "HackAndSlash/AbilitySystem/Abilities/CombatHeroGameplayAbility.h"
+#include "HackAndSlash/CombatGameplayTags.h"
 
   
 void UCombatAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InInputTag)  
@@ -25,7 +26,18 @@ void UCombatAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& In
 
 void UCombatAbilitySystemComponent::OnAbilityInputReleased(const FGameplayTag& InInputTag)  
 {  
+	if (!InInputTag.IsValid() || !InInputTag.MatchesTag(CombatGameplayTags::InputTag_MustBeHeld))
+	{
+		return;
+	}
 
+	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag) && AbilitySpec.IsActive())
+		{
+			CancelAbilityHandle(AbilitySpec.Handle);
+		}
+	}
 }  
 
   
