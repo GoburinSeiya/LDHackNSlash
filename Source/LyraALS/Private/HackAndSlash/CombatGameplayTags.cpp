@@ -14,6 +14,7 @@ namespace CombatGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_UnequipSword, "InputTag.UnequipSword");
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_LightAttack_Sword, "InputTag.LightAttack.Sword");  
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_HeavyAttack_Sword, "InputTag.HeavyAttack.Sword")
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_Dodge, "InputTag.Dodge")
 	
 	/** Player tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Player_Weapon_Sword, "Player.Weapon.Sword");
@@ -31,6 +32,7 @@ namespace CombatGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Attack_Light_Sword, "Player.Ability.Attack.Light.Sword");  
     UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Attack_Heavy_Sword, "Player.Ability.Attack.Heavy.Sword");
     UE_DEFINE_GAMEPLAY_TAG(Player_Ability_HitPause, "Player.Ability.HitPause");
+    UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Dodge, "Player.Ability.Dodge");
 	
     UE_DEFINE_GAMEPLAY_TAG(Player_SetByCaller_AttackType_Light, "Player.SetByCaller.AttackType.Light");
     UE_DEFINE_GAMEPLAY_TAG(Player_SetByCaller_AttackType_Heavy, "Player.SetByCaller.AttackType.Heavy");
@@ -38,8 +40,9 @@ namespace CombatGameplayTags
 	/** Player status tags **/
 	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_JumpToFinisher, "Player.Status.JumpToFinisher"); //tag used to jump to heavy combo end from light attacks
 	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_LiftoffCombo, "Player.Status.LiftoffCombo");
-	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_IsHeavyAttacking, "Player.Status.IsHeavyAttacking");
+	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_IsHeavyAttacking, "Player.Status.IsHeavyAttacking"); 
 	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_IsLightAttacking, "Player.Status.IsLightAttacking");
+	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_IsDodging, "Player.Status.IsDodging");
 
 	/** Enemy tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Weapon, "Enemy.Weapon");
@@ -54,6 +57,9 @@ namespace CombatGameplayTags
 	/** Shared event tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Event_MeleeHit, "Shared.Event.MeleeHit");
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Event_HitReact, "Shared.Event.HitReact");
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Event_HitReact_Light, "Shared.Event.HitReact.Light");
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Event_HitReact_Heavy, "Shared.Event.HitReact.Heavy");
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Event_HitReact_Slam, "Shared.Event.HitReact.Slam");
 	
 
 	/** Shared set by caller tags **/
@@ -62,10 +68,18 @@ namespace CombatGameplayTags
 
 	/** Shared ability tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact, "Shared.Ability.HitReact");
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact_Light, "Shared.Ability.HitReact.Light");
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact_Heavy, "Shared.Ability.HitReact.Heavy");
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Ability_HitReact_Slam, "Shared.Ability.HitReact.Slam");
+	
 	/** Shared status tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_Death, "Shared.Status.Death");//this is the tag we should add when HP reaches 0
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_StanceBroken, "Shared.Status.StanceBroken"); //this is the tag we should add when Stance reaches it's limit
-	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_Strafing, "Shared.Status.Strafing");
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_HitReact_Front, "Shared.Status.HitReact.Front");
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_HitReact_Back, "Shared.Status.HitReact.Back");
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_HitReact_Left, "Shared.Status.HitReact.Left");
+	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_HitReact_Right, "Shared.Status.HitReact.Right");
+	
 	 
 	
 }

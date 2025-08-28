@@ -68,7 +68,10 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 
 	
 	float BaseDamage = 0.f;
+	float BaseStanceDamage = 0.f;
 	float SourceStanceDamage = 0.f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetCombatDamageCapture().StanceDamageDef, EvaluateParams, SourceStanceDamage);
+	// Debug::Print(TEXT("SourceStanceDamage"), SourceStanceDamage);
 	int32 UsedLightAttackComboCount = 0;
 	int32 UsedHeavyAttackComboCount = 0;
 	//We call the tmap where we place our elements inside the helper function
@@ -82,7 +85,7 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 
 		if (TagMagnitude.Key.MatchesTagExact(CombatGameplayTags::Shared_SetByCaller_StanceDamage))
 		{
-			SourceStanceDamage = TagMagnitude.Value;
+			BaseStanceDamage = TagMagnitude.Value;
 			// Debug::Print(TEXT("SourceStageDamage: "), SourceStanceDamage);
 		}
 

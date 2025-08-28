@@ -6,6 +6,8 @@
 #include "HackAndSlash/AbilitySystem/CombatAbilitySystemComponent.h"  
 #include "HackAndSlash/Components/Combat/PawnCombatComponent.h"
 #include "HackAndSlash/Interfaces/PawnCombatInterface.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "HackAndSlash/CombatGameplayTags.h"
 #include "GenericTeamAgentInterface.h"
 
 UCombatAbilitySystemComponent* UCombatFunctionLibrary::NativeGetCombatASCFromActor(AActor* InActor)
@@ -90,4 +92,47 @@ bool UCombatFunctionLibrary::IsTargetPawnHostile(APawn* QueryPawn, APawn* Target
 	}
 
 	return false;
+}
+
+float UCombatFunctionLibrary::GetScalableFloatValueAtLevel(const FScalableFloat& InScalableFloat, float InLevel)
+{
+	return InScalableFloat.GetValueAtLevel(InLevel);
+}
+
+FGameplayTag UCombatFunctionLibrary::ComputeHitReactDirectionTag(AActor* InAttacker, AActor* InHitActor,
+	float& OutAngleDifference)
+{
+	check(InAttacker && InHitActor);
+
+	const FVector HitActorForward = InHitActor->GetActorForwardVector();
+	const FVector VictimToAttackerNormalized = (InAttacker->GetActorLocation() - InHitActor->GetActorLocation()).GetSafeNormal();
+
+	const float DotResult = FVector::DotProduct(HitActorForward, VictimToAttackerNormalized);
+
+	//The result is in rad, we need to convert it to deg
+	OutAngleDifference = UKismetMathLibrary::DegAcos(DotResult);
+
+	const FVector CrossResult = FVector::CrossProduct(HitActorForward, VictimToAttackerNormalized);
+
+	if (CrossResult.Z < 0.f)
+		OutAngleDifference *= -1.f;
+
+	if (OutAngleDifference >- -45.f && OutAngleDifference <= 45.f)
+	{
+		return CombatGameplayTags::Shared_Status_HitReact_Front;
+	}
+	else if (OutAngleDifference < -45.f && OutAngleDifference >= -135.f)
+	{
+		return CombatGameplayTags::Shared_Status_HitReact_Left;
+	}
+	else if (OutAngleDifference < -135.f || OutAngleDifference > 135.f)
+	{
+		return CombatGameplayTags::Shared_Status_HitReact_Back;
+	}
+	else if (OutAngleDifference > 45.f && OutAngleDifference <= 135.f)
+	{
+		return CombatGameplayTags::Shared_Status_HitReact_Right;
+	}
+	
+	return CombatGameplayTags::Shared_Status_HitReact_Front;
 }

@@ -12,7 +12,8 @@ namespace CombatGameplayTags
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_EquipSword);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_UnequipSword);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_LightAttack_Sword);  
-	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_HeavyAttack_Sword);  
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_HeavyAttack_Sword);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Dodge);  
 
 	/** Player tags **/
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Weapon_Sword); //tag used to register weapon
@@ -29,6 +30,7 @@ namespace CombatGameplayTags
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Attack_Light_Sword);  
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Attack_Heavy_Sword);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_HitPause);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Dodge);
 
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_SetByCaller_AttackType_Light);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_SetByCaller_AttackType_Heavy);
@@ -38,6 +40,7 @@ namespace CombatGameplayTags
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_LiftoffCombo);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_IsHeavyAttacking);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_IsLightAttacking);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_IsDodging);
 	
 
 	
@@ -52,7 +55,9 @@ namespace CombatGameplayTags
 	
 	/** Shared event tags **/
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_MeleeHit);
-	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_HitReact);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_HitReact_Light);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_HitReact_Heavy);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_HitReact_Slam);
 	
 	
 
@@ -61,7 +66,9 @@ namespace CombatGameplayTags
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_SetByCaller_StanceDamage);
 
 	/** Shared ability tags **/
-	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_HitReact);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_HitReact_Light);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_HitReact_Heavy);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_HitReact_Slam);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_Death);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_StanceBreak);
 
@@ -69,6 +76,11 @@ namespace CombatGameplayTags
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_Death); //this is the tag we should add when HP reaches 0
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_StanceBroken); //this is the tag we should add when Stance reaches it's limit
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_Strafing);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Front);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Back);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Left);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_HitReact_Right);
+	
 	
 	
 }
