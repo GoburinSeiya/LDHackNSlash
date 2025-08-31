@@ -26,7 +26,7 @@ void UCombatAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& In
 
 void UCombatAbilitySystemComponent::OnAbilityInputReleased(const FGameplayTag& InInputTag)  
 {  
-	if (!InInputTag.IsValid() || !InInputTag.MatchesTag(CombatGameplayTags::InputTag_MustBeHeld))
+	if (!InInputTag.IsValid() || ! InInputTag.MatchesTag(CombatGameplayTags::InputTag_MustBeHeld))
 	{
 		return;
 	}
@@ -106,4 +106,4 @@ bool UCombatAbilitySystemComponent::TryActivateAbilityByTag(FGameplayTag Ability
 	}
 
 	return false;
-}  
+}
