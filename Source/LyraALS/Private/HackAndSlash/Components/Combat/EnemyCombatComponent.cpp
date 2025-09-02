@@ -5,6 +5,7 @@
 #include "HackAndSlash/CombatDebugHelper.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "HackAndSlash/CombatGameplayTags.h"
+#include "HackAndSlash/CombatFunctionLibrary.h"
 
 void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 {
@@ -21,18 +22,27 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 		//TODO:: Implement block check
 		bool bIsValidBlock = false;
 		bool bIsValidDodge = false;
+		bool bIsValidDeflect = false;
 
-		const bool bIsPlayerBlocking = false;
+		const bool bIsPlayerBlocking = UCombatFunctionLibrary::NativeActorDoesHaveTag(HitActor, CombatGameplayTags::Player_Status_IsBlocking);
+		const bool bPlayerDeflected = UCombatFunctionLibrary::NativeActorDoesHaveTag(HitActor,CombatGameplayTags::Player_Status_ActiveDeflectFrames);
 		const bool bIsAttackUnblockable = false;
 		const bool bIsPlayerDodgeing = false;
 		const bool bIsAttackUndodgeable = false;
 
-		if (bIsPlayerBlocking && !bIsAttackUnblockable)
+		if (bPlayerDeflected)
 		{
-			//TODO:: validate block			
+			const FString DebugString = FString::Printf(TEXT("Deflect: %b %s"), bPlayerDeflected? TEXT("Valid Deflect") : TEXT("Invalid Deflect"));
+			Debug::Print(DebugString, bPlayerDeflected? FColor::Green : FColor::Red);
+			bIsValidDeflect = true;
 		}
 
-		if (bIsPlayerDodgeing && bIsAttackUndodgeable)
+		else if (bIsPlayerBlocking && !bIsAttackUnblockable)
+		{
+			bIsValidBlock = UCombatFunctionLibrary::IsVectorPerpendicular(GetOwningPawn(), HitActor);	
+		}
+		
+		else if (bIsPlayerDodgeing && bIsAttackUndodgeable)
 		{
 			//TODO:: validate dodge
 		}
@@ -40,10 +50,22 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 		FGameplayEventData EventData;
 		EventData.Instigator = GetOwningPawn();
 		EventData.Target = HitActor;
-
-		if (bIsValidBlock)
+		
+		if (bIsValidDeflect)
 		{
-			//TODO:: Handle block
+			UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+				HitActor,
+				CombatGameplayTags::Shared_Event_Deflect,
+				EventData
+				);
+		}
+		else if (bIsValidBlock)
+		{
+			UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+				HitActor,
+				CombatGameplayTags::Player_Event_Blocked,
+				EventData
+				);
 		}
 		else if (bIsValidDodge)
 		{

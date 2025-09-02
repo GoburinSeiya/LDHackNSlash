@@ -49,4 +49,7 @@ public:
 
 	UFUNCTION(BlueprintPure, Category="Combat|FunctionLibrary")
 	static FGameplayTag ComputeHitReactDirectionTag(AActor* InAttacker, AActor* InHitActor, float& OutAngleDifference);
+
+	UFUNCTION(BlueprintPure, Category="Combat|FunctionLibrary")
+	static bool IsVectorPerpendicular(AActor* InAttacker, AActor* InDefender);
 };

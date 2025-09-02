@@ -9,6 +9,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "HackAndSlash/CombatGameplayTags.h"
 #include "GenericTeamAgentInterface.h"
+#include "HackAndSlash/CombatDebugHelper.h"
 
 UCombatAbilitySystemComponent* UCombatFunctionLibrary::NativeGetCombatASCFromActor(AActor* InActor)
 {
@@ -135,4 +136,16 @@ FGameplayTag UCombatFunctionLibrary::ComputeHitReactDirectionTag(AActor* InAttac
 	}
 	
 	return CombatGameplayTags::Shared_Status_HitReact_Front;
+}
+
+bool UCombatFunctionLibrary::IsVectorPerpendicular(AActor* InAttacker, AActor* InDefender)
+{
+	check(InAttacker && InDefender);
+
+	const float DotResult = FVector::DotProduct(InAttacker->GetActorForwardVector(), InDefender->GetActorForwardVector());
+	
+	// const FString DebugString = FString::Printf(TEXT("DotResult: %f %s"), DotResult, DotResult<-0.1f? TEXT("Valid Block") : TEXT("Invalid Block"));
+	// Debug::Print(DebugString, DotResult<-0.1f? FColor::Green : FColor::Red);
+	
+	return DotResult <-0.1f? true : false; 
 }

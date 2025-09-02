@@ -32,5 +32,8 @@ public:
 
 	virtual void OnHitTargetActor(AActor* HitActor) override;
 	virtual void OnWeaponPulledFromTargetActor(AActor* InteractedActor) override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat|Blocking")
+	int BlockSpamCounter = 0; 
 	
 };

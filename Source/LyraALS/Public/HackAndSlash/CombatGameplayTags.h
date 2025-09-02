@@ -31,6 +31,7 @@ namespace CombatGameplayTags
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_BeginBuffer);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_WaitComboExecute);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_HitPause);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_Blocked);
 	/** Player Ability Tags **/
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Equip_Sword);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Unequip_Sword);
@@ -51,6 +52,7 @@ namespace CombatGameplayTags
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_IsDodging);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_IsBlocking);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_IsCharging);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_ActiveDeflectFrames);
 	
 
 	
@@ -68,6 +70,7 @@ namespace CombatGameplayTags
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_HitReact_Light);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_HitReact_Heavy);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_HitReact_Slam);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_Deflect);
 	
 	
 
@@ -81,6 +84,7 @@ namespace CombatGameplayTags
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_HitReact_Slam);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_Death);
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_StanceBreak);
+	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Ability_Deflect);
 
 	/** Shared status tags **/
 	LYRAALS_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Status_Death); //this is the tag we should add when HP reaches 0
