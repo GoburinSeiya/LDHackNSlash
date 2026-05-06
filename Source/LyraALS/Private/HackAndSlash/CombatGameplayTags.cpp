@@ -16,6 +16,8 @@ namespace CombatGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_HeavyAttack_Sword, "InputTag.HeavyAttack.Sword")
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Dodge, "InputTag.Dodge")
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Block, "InputTag.Block")
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_Toggleable, "InputTag.Toggleable")
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_Toggleable_TargetLock, "InputTag.Toggleable.TargetLock")
 
 	/** Held abilities **/
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_MustBeHeld, "InputTag.MustBeHeld")
@@ -41,6 +43,7 @@ namespace CombatGameplayTags
     UE_DEFINE_GAMEPLAY_TAG(Player_Ability_HitPause, "Player.Ability.HitPause");
     UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Dodge, "Player.Ability.Dodge");
     UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Block, "Player.Ability.Block");
+    UE_DEFINE_GAMEPLAY_TAG(Player_Ability_TargetLock, "Player.Ability.TargetLock");
     UE_DEFINE_GAMEPLAY_TAG(InputTag_Block_Released, "InputTag.Block.Released");
 	
     UE_DEFINE_GAMEPLAY_TAG(Player_SetByCaller_AttackType_Light, "Player.SetByCaller.AttackType.Light");
@@ -55,6 +58,7 @@ namespace CombatGameplayTags
 	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_IsBlocking, "Player.Status.IsBlocking");
 	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_IsCharging, "Player.Status.IsCharging");
 	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_ActiveDeflectFrames, "Player.Status.ActiveDeflectFrames");
+	 UE_DEFINE_GAMEPLAY_TAG(Player_Status_IsTargeting, "Player.Status.IsTargeting");
 
 	/** Enemy tags **/
 	UE_DEFINE_GAMEPLAY_TAG(Enemy_Weapon, "Enemy.Weapon");

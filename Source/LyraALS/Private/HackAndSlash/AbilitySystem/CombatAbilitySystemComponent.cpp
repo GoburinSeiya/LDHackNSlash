@@ -18,8 +18,23 @@ void UCombatAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& In
 
 	for(const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())  
 	{
-		if(!AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag)) continue;  
-		TryActivateAbility(AbilitySpec.Handle);  
+		if(!AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag)) continue;
+
+		if (InInputTag.MatchesTag(CombatGameplayTags::InputTag_Toggleable))
+		{
+			if (AbilitySpec.IsActive())
+			{
+				CancelAbilityHandle(AbilitySpec.Handle);
+			}
+			else
+			{
+				TryActivateAbility(AbilitySpec.Handle);  
+			}
+		}
+		else
+		{
+			TryActivateAbility(AbilitySpec.Handle);
+		}
 	}
 }  
 

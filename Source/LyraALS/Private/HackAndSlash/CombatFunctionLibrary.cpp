@@ -147,5 +147,5 @@ bool UCombatFunctionLibrary::IsVectorPerpendicular(AActor* InAttacker, AActor* I
 	// const FString DebugString = FString::Printf(TEXT("DotResult: %f %s"), DotResult, DotResult<-0.1f? TEXT("Valid Block") : TEXT("Invalid Block"));
 	// Debug::Print(DebugString, DotResult<-0.1f? FColor::Green : FColor::Red);
 	
-	return DotResult <-0.1f? true : false; 
+	return DotResult <-0.1f; 
 }
