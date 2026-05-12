@@ -6,6 +6,8 @@
 #include "CombatHeroGameplayAbility.h"
 #include "PlayerGameplayAbility_TargetLock.generated.h"
 
+class UGameWidgetBase;
+
 /**
  * 
  */
@@ -29,9 +31,18 @@ protected:
 
 	//~ End UGameplayAbility Interface
 
+	UFUNCTION(BlueprintCallable)
+	void OnTargetLockTick(float DeltaTime);
+
 private:
 	void TryLockOnTarget();
 	void GetAvailableTargets();
+	AActor* GetNearestTargetFromAvailableActors(const TArray<AActor*>& InAvailableActors);
+	void DrawTargetLockWidget();
+	void SetTargetLockWidgetPosition();
+	
+	void CancelTargetLock();
+	void CleanUpTargetLock();
 
 	UPROPERTY(EditDefaultsOnly, Category="Target Lock")
 	float BoxTraceDistance = 5000.f;
@@ -48,7 +59,20 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category="Target Lock")
 	bool bShowPersistentDebugShape = false;
 
+	//This is a hard reference, good since this is a key asset, with a low mem cost and will be used often, we want it in memory
+	UPROPERTY(EditDefaultsOnly, Category="Target Lock")
+	TSubclassOf<UGameWidgetBase> TargetLockWidgetClass;
+
 	UPROPERTY()
 	TArray<AActor*> AvailableLockOnActors;
+
+	UPROPERTY()
+	AActor* CurrentLockedOnActor;
+
+	UPROPERTY()
+	UGameWidgetBase* DrawnTargetLockWidget;
+
+	UPROPERTY()
+	FVector2D TargetLockWidgetSize = FVector2D::ZeroVector;
 
 };
