@@ -13,6 +13,7 @@
 #include "Components/SizeBox.h"
 #include "HackAndSlash/CombatFunctionLibrary.h"
 #include "HackAndSlash/CombatGameplayTags.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "HackAndSlash/CombatDebugHelper.h"
 
 void UPlayerGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
@@ -43,6 +44,26 @@ void UPlayerGameplayAbility_TargetLock::OnTargetLockTick(float DeltaTime)
 	}
 
 	SetTargetLockWidgetPosition();
+
+	//Orient player to target
+	const bool bShouldOverrideRotation =
+		!UCombatFunctionLibrary::NativeActorDoesHaveTag(GetHeroCharacterFromActorInfo(), CombatGameplayTags::Player_Status_IsDodging)
+		&&
+		!UCombatFunctionLibrary::NativeActorDoesHaveTag(GetHeroCharacterFromActorInfo(),CombatGameplayTags::Player_Status_IsBlocking);
+
+	if (bShouldOverrideRotation)
+	{
+		const FRotator LookAtRot = UKismetMathLibrary::FindLookAtRotation(
+			GetHeroCharacterFromActorInfo()->GetActorLocation(),
+			CurrentLockedOnActor->GetActorLocation()
+			);
+
+		const FRotator CurrentControlRot = GetHeroControllerFromActorInfo()->GetControlRotation();
+		const FRotator TargetRot = FMath::RInterpTo(CurrentControlRot, LookAtRot, DeltaTime, TargetLockRotInterpSpeed);
+		
+		GetHeroControllerFromActorInfo()->SetControlRotation(FRotator(TargetRot.Pitch, TargetRot.Yaw, 0.f));
+		GetHeroCharacterFromActorInfo()->SetActorRotation(FRotator(0.f, TargetRot.Yaw, 0.f));
+	}
 }
 
 void UPlayerGameplayAbility_TargetLock::TryLockOnTarget()

@@ -63,6 +63,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category="Target Lock")
 	TSubclassOf<UGameWidgetBase> TargetLockWidgetClass;
 
+	UPROPERTY(EditDefaultsOnly, Category="Target Lock")
+	float TargetLockRotInterpSpeed = 5.f;
+	
 	UPROPERTY()
 	TArray<AActor*> AvailableLockOnActors;
 
