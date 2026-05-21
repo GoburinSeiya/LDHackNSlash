@@ -7,6 +7,7 @@
 #include "GameplayTagContainer.h"
 #include "CombatHeroCharacter.generated.h"
 
+struct FInputActionValue;
 class UDataAsset_InputConfig;
 class UHeroCombatComponent; //forward declare component
 class UPlayerUIComponent;
@@ -56,6 +57,12 @@ private:
 	// we make functions for our ability inputs
 	void Input_AbilityInputPressed(FGameplayTag InInputTag);
 	void Input_AbilityInputReleased(FGameplayTag InInputTag);
+
+	void Input_SwitchTargetTriggered(const FInputActionValue& InputActionValue);
+	void Input_SwitchTargetCompleted(const FInputActionValue& InputActionValue);
+
+	FVector2D MovementInputDirection = FVector2D::ZeroVector;
+	
 #pragma endregion
 
 public:

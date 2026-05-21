@@ -7,6 +7,7 @@
 #include "PlayerGameplayAbility_TargetLock.generated.h"
 
 class UGameWidgetBase;
+class UInputMappingContext;
 
 /**
  * 
@@ -40,9 +41,11 @@ private:
 	AActor* GetNearestTargetFromAvailableActors(const TArray<AActor*>& InAvailableActors);
 	void DrawTargetLockWidget();
 	void SetTargetLockWidgetPosition();
+	void InitTargetLockIMC();
 	
 	void CancelTargetLock();
 	void CleanUpTargetLock();
+	void ResetTargetLockIMC();
 
 	UPROPERTY(EditDefaultsOnly, Category="Target Lock")
 	float BoxTraceDistance = 5000.f;
@@ -65,6 +68,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category="Target Lock")
 	float TargetLockRotInterpSpeed = 5.f;
+
+	UPROPERTY(EditDefaultsOnly, Category="Target Lock")
+	UInputMappingContext* TargetLockInputMappingContext;
 	
 	UPROPERTY()
 	TArray<AActor*> AvailableLockOnActors;

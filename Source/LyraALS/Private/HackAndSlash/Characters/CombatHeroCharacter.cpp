@@ -11,6 +11,7 @@
 #include "HackAndSlash/Components/Combat/HeroCombatComponent.h"
 #include "HackAndSlash/Components/Input/CombatInputComponent.h"
 #include "HackAndSlash/CombatDebugHelper.h"
+#include "AbilitySystemBlueprintLibrary.h"
 #include "HackAndSlash/Components/UI/PlayerUIComponent.h"
 
 struct FInputActionValue;
@@ -60,6 +61,15 @@ void ACombatHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	//We call the Bind function from our CombatInputComponent and pass down its inputs
 	CombatInputComponent->BindAbilityInputAction(InputConfigDataAsset, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
 	//													Data asset		Actor performing		Pressed callback					released callback
+
+	CombatInputComponent->BindNativeInputAction(InputConfigDataAsset,
+		CombatGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Triggered, this,
+		&ThisClass::Input_SwitchTargetTriggered);
+
+	CombatInputComponent->BindNativeInputAction(InputConfigDataAsset,
+		CombatGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Completed, this,
+		&ThisClass::Input_SwitchTargetCompleted);
+	
 }
 
 void ACombatHeroCharacter::BeginPlay()
@@ -76,5 +86,23 @@ void ACombatHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
 void ACombatHeroCharacter::Input_AbilityInputReleased(FGameplayTag InInputTag)
 {
 	CombatAbilitySystemComponent->OnAbilityInputReleased(InInputTag); 
+}
+
+void ACombatHeroCharacter::Input_SwitchTargetTriggered(const FInputActionValue& InputActionValue)
+{
+	MovementInputDirection = InputActionValue.Get<FVector2D>();
+}
+
+void ACombatHeroCharacter::Input_SwitchTargetCompleted(const FInputActionValue& InputActionValue)
+{
+	FGameplayEventData Data;
+	
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		this, //actor to send the event to
+		MovementInputDirection.X>0.f?CombatGameplayTags::Player_Event_SwitchTarget_Right : CombatGameplayTags::Player_Event_SwitchTarget_Left, //event to send
+		Data // gameplay event data
+	);
+
+	Debug::Print(TEXT("SwitchDirection: ") + MovementInputDirection.ToString(), FColor::Orange);
 }
 

@@ -14,6 +14,8 @@
 #include "HackAndSlash/CombatFunctionLibrary.h"
 #include "HackAndSlash/CombatGameplayTags.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "EnhancedInputSubsystemInterface.h"
+#include "EnhancedInputSubsystems.h"
 #include "HackAndSlash/CombatDebugHelper.h"
 
 void UPlayerGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
@@ -21,6 +23,8 @@ void UPlayerGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySp
 	const FGameplayEventData* TriggerEventData)
 {
 	TryLockOnTarget();
+	InitTargetLockIMC();
+	
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 }
 
@@ -29,6 +33,8 @@ void UPlayerGameplayAbility_TargetLock::EndAbility(const FGameplayAbilitySpecHan
 	bool bReplicateEndAbility, bool bWasCancelled)
 {
 	CleanUpTargetLock();
+
+	ResetTargetLockIMC();
 	
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }
@@ -178,6 +184,17 @@ void UPlayerGameplayAbility_TargetLock::SetTargetLockWidgetPosition()
 	DrawnTargetLockWidget->SetPositionInViewport(ScreenPos, false);
 }
 
+void UPlayerGameplayAbility_TargetLock::InitTargetLockIMC()
+{
+	const ULocalPlayer* LocalPlayer = GetHeroControllerFromActorInfo()->GetLocalPlayer();
+	
+	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer);
+
+	check(Subsystem);
+
+	Subsystem->AddMappingContext(TargetLockInputMappingContext, 3);
+}
+
 void UPlayerGameplayAbility_TargetLock::CancelTargetLock()
 {
 	CancelAbility(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo(), GetCurrentActivationInfo(), true);
@@ -194,4 +211,18 @@ void UPlayerGameplayAbility_TargetLock::CleanUpTargetLock()
 
 	DrawnTargetLockWidget = nullptr;
 	TargetLockWidgetSize = FVector2D::ZeroVector;
+}
+
+void UPlayerGameplayAbility_TargetLock::ResetTargetLockIMC()
+{
+	if (!GetHeroControllerFromActorInfo())
+		return;
+	
+	const ULocalPlayer* LocalPlayer = GetHeroControllerFromActorInfo()->GetLocalPlayer();
+
+	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer);
+
+	check(Subsystem);
+
+	Subsystem->RemoveMappingContext(TargetLockInputMappingContext);
 }
